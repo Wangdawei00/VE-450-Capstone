@@ -24,7 +24,7 @@ class Test extends React.Component {
   }
 
   afterFailed() {
-    console.log("success");
+    console.log("failed");
   }
 
   render() {
