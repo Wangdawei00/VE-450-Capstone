@@ -23,3 +23,5 @@ bin/asdrun
 ```
 
 After a few seconds, an ip address, together with a port, will appear in the command line and you can visit it in your browser.
+
+**Note:** If you did not change the javascript file, you can comment out line 14 `npx webpack` in `bin/asdrun` to save time from compiling the bundled js files.
