@@ -15,7 +15,10 @@ The installation might take a few minutes, be patient.
 |---------------|----------------|
 |/mnt/d/Users/Wangdawei/VE-450-Capstone|/home/wangdawei/VE-450-Capstone|
 
-
+Then you should activate the python virtual environment:
+```
+source env/bin/activate
+```
 After that, you can use the following command to setup a local website
 
 ```
