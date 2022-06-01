@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# use the following line in command line to test
+# /bin/bash t.sh
+
+# or add this to the top line '#!/bin/bash' # this is the shebang
+# (rename without .sh) and put the file in /bin
+# run 'chmod +x bin/t' in cmd
+# and run './bin/t' directly
+
+# stop on errors, print commands
+set -Eeuo pipefail
+set -x
+#npx webpack
+#./bin/dspdb reset
+#if [ ! -f "var/dsp.sqlite3" ]; then
+#  ./bin/dspdb create
+#fi
+
+export FLASK_ENV=production
+export FLASK_APP=ASD
+flask run --host 0.0.0.0 --port 8000

@@ -1,0 +1,7 @@
+env/
+*__pycache__*
+ASD/js/bundle.js
+.idea/
+*egg-info*
+node_modules/
+var/

@@ -1,0 +1,34 @@
+{
+  "name": "website",
+  "version": "0.1.0",
+  "description": "DSP front end",
+  "main": "DSP/js/main.jsx",
+  "author": "awdeorio",
+  "license": "MIT",
+  "repository": {},
+  "devDependencies": {
+    "@babel/core": "7.12.13",
+    "@babel/preset-env": "7.12.13",
+    "@babel/preset-react": "7.12.13",
+    "babel-loader": "8.2.2",
+    "webpack": "5.21.2",
+    "webpack-cli": "4.5.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^4.6.0",
+    "moment": "^2.29.3",
+    "prop-types": "15.7.2",
+    "react": "17.0.1",
+    "react-bootstrap": "^1.6.1",
+    "react-bootstrap-switch": "^15.5.3",
+    "react-dom": "17.0.1",
+    "react-infinite-scroll-component": "6.0.0",
+    "react-switch": "^6.0.0",
+    "regenerator-runtime": "^0.13.9",
+    "seeso": "^0.1.6"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
