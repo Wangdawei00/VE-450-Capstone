@@ -7,7 +7,7 @@ Run the following command to set up a new environment
 bin/asdinstall
 ```
 
-You might be prompted to install python3 or python3-venv. 
+You might be prompted to install python3, python3-venv or node. 
 The installation might take a few minutes, be patient.
 
 **_Note_:** If you are using WSL, the installation might be faster if you put this project under the Linux path instead of the Windows path. npm tends to work slower over a network connection.
