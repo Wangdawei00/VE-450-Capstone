@@ -64,7 +64,7 @@ class Test extends React.Component {
         <h2>Gaze Information Below</h2>
         <h2>x: {x}</h2>
         <h2>y: {y}</h2>
-
+        <img id="red_dot" src="/static/images/red_dot.jpg" alt="No image" style={{top: y, left: x}}/>
       </div>
     } else {
       return <div>Initialization failed! Check license!</div>
