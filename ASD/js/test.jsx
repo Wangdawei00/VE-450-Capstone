@@ -38,10 +38,12 @@ class Test extends React.Component {
   afterInitialized() {
     console.log("success");
     const {seeso} = this.state;
+    const {calibration_data} = this.props;
     seeso.setMonitorSize(16);
     seeso.setFaceDistance(50);
     seeso.setCameraPosition(window.outerWidth / 2, true);
     seeso.startTracking(this.onGaze, this.onDebug)
+    seeso.setCalibrationData(calibration_data);
     this.setState({initialization_success: true})
   }
 
@@ -73,7 +75,8 @@ class Test extends React.Component {
 }
 
 Test.propTypes = {
-  license: PropTypes.string.isRequired
+  license: PropTypes.string.isRequired,
+  calibration_data: PropTypes.string.isRequired
 };
 
 export default Test;
