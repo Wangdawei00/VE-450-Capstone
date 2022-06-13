@@ -1,11 +1,13 @@
 """Insta485 development configuration."""
 
 import pathlib
+import secrets
 
 # Root of this application, useful if it doesn't occupy an entire domain
 APPLICATION_ROOT = '/'
 
 # Secret key for encrypting cookies
+SECRET_KEY = secrets.token_bytes(24)
 # SECRET_KEY = b'\xe7\xc1\xcaK\xa0Qd\xce\x8e\x10\xe3wo\x9b' \
 #              b'\xdf{\xceC?\xad\xd4`=\x0c'
 # SESSION_COOKIE_NAME = 'login'

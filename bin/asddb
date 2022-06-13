@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# use the following line in command line to test
+# /bin/bash t.sh
+
+# or add this to the top line '#!/bin/bash' # this is the shebang
+# (rename without .sh) and put the file in /bin
+# run 'chmod +x bin/t' in cmd
+# and run './bin/t' directly
+
+# stop on errors, print commands
+set -Eeuo pipefail
+set -x
+
+# Sanity check command line options
+usage() {
+    echo "Usage: $0 (create|destroy|reset)"
+}
+
+if [ $# -ne 1 ]; then
+    usage
+    exit 1
+fi
+
+# Parse argument.  $1 is the first argument
+case $1 in
+"create")
+    if [ ! -f "var/asd.sqlite3" ]; then
+        sqlite3 var/asd.sqlite3 <sql/schema.sql
+        sqlite3 var/asd.sqlite3 <sql/data.sql
+    else
+        echo "Error: database already exists"
+        exit 1
+    fi
+    ;;
+
+"destroy")
+    rm -rf var/asd.sqlite3
+    ;;
+
+"reset")
+    rm -rf var/asd.sqlite3
+    sqlite3 var/asd.sqlite3 <sql/schema.sql
+    sqlite3 var/asd.sqlite3 <sql/data.sql
+    ;;
+
+*)
+    usage
+    exit 1
+    ;;
+esac

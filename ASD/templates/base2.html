@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css?v=1.112">
+</head>
+
+<body>
+
+<!-- website header -->
+<div class="header">
+    <div class="logo" style="float: left;">
+{#        <a href="/"><img border="0" src="/static/images/logo.jpg" alt="logo" width="100"></a>#}
+        <!--                <a href="/"> logo </a>-->
+    </div>
+    {% block head %} {% endblock head %}
+    <br>
+    <br>
+</div>
+<hr/>
+<!-- website contents -->
+<div class="contents">
+    {% block contents %}
+
+    {% endblock contents %}
+</div>
+
+</body>
+
+</html>

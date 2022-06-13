@@ -11,8 +11,8 @@
 # stop on errors, print commands
 set -Eeuo pipefail
 set -x
-npx webpack
-#./bin/dspdb reset
+#npx webpack
+./bin/asddb reset
 #if [ ! -f "var/dsp.sqlite3" ]; then
 #  ./bin/dspdb create
 #fi

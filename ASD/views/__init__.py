@@ -1,1 +1,2 @@
-from ASD.views.index import index
+from ASD.views.index import *
+from ASD.views.login import *

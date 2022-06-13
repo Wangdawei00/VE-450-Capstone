@@ -1,0 +1,19 @@
+{% extends "base2.html" %}
+
+{% block title %} Login {% endblock title %}
+{% block head %}
+    <div class="right up" style="float:right">
+        login
+    </div>
+{% endblock head %}
+
+{% block contents %}
+    <!-- DO NOT CHANGE THIS (aside from styling) -->
+    <form action="/accounts/?target=%2F" method="post" enctype="multipart/form-data">
+        <input type="text" name="username" required/>
+        <input type="password" name="password" required/>
+        <input type="submit" value="login"/>
+        <input type="hidden" name="operation" value="login"/>
+    </form>
+    <p><a href="/accounts/create/"> Don't have an account? <b>Sign up</b> </a></p>
+{% endblock contents %}
