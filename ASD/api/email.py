@@ -39,3 +39,7 @@ def email():
     msg.body = "One Time password: " + OTP
     connection.execute("UPDATE users SET OTP = ? WHERE email = ?", (OTP, user_email))
     ASD.mail.send(msg)
+    return flask.jsonify({
+        "message": "OK",
+        "status_code": 200
+    }), 200

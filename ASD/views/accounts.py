@@ -44,55 +44,12 @@ def new_login(connection):
     flask.session[ASD.app.config.session_cookie_name] = flask.request.form['username']
 
 
-def new_create(connection):
-    """
-        Create a new account.
-
-        @param connection: database connection
-        @return: None
-    """
-    user_email = flask.request.form['email']
-    password_raw = flask.request.form['password']
-    if not (user_email and password_raw):
-        flask.abort(400)
-    cur = connection.execute('SELECT COUNT(*) FROM users WHERE email=?', (user_email,))
-    if cur.fetchone()['COUNT(*)'] != 0:
-        flask.abort(409)
-    algorithm = 'sha512'
-    salt = uuid.uuid4().hex
-    password_hash = hash_password(algorithm, salt, password_raw)
-    password_db = '$'.join([algorithm, salt, password_hash])
-    connection.execute('INSERT INTO users(email, password) VALUES (?,?,?)',
-                       (user_email, password_db))
-    flask.session[ASD.app.config.session_cookie_name] = user_email
-
-
-def new_reset(connection):
-    username = flask.request.form['username']
-    password_raw = flask.request.form['password']
-    if not (username and password_raw):
-        flask.abort(400)
-    cur = connection.execute('SELECT COUNT(*) FROM users WHERE email=?', (username,))
-    if cur.fetchone()['COUNT(*)'] == 0:
-        flask.abort(404)
-    algorithm = 'sha512'
-    salt = uuid.uuid4().hex
-    password_hash = hash_password(algorithm, salt, password_raw)
-    password_db = '$'.join([algorithm, salt, password_hash])
-
-
 @ASD.app.route("/accounts/login/")
 def login():
     if ASD.app.config.session_cookie_name in flask.session:
         return flask.redirect(flask.url_for('index'))
     return flask.render_template("login.html")
 
-
-@ASD.app.route('/accounts/create/')
-def create():
-    if ASD.app.config.session_cookie_name in flask.session:
-        return flask.redirect(flask.url_for('index'))
-    return flask.render_template('create.html')
 
 
 @ASD.app.route("/accounts/", methods=['POST'])
@@ -108,15 +65,3 @@ def account():
     if not flask.request.args.get('target'):
         return flask.redirect(flask.url_for('index'))
     return flask.redirect(flask.request.args.get('target'))
-
-
-@ASD.app.route('/accounts/reset/')
-def reset():
-    if ASD.app.config.session_cookie_name in flask.session:
-        return flask.redirect(flask.url_for('index'))
-    return flask.render_template('reset_email.html')
-
-#
-# @ASD.app.route('/accounts/reset_email/')
-# def email():
-#
