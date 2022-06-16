@@ -1,6 +1,6 @@
 env/
 *__pycache__*
-ASD/static/js/bundle.js
+ASD/static/js/*.bundle.js
 .idea/
 *egg-info*
 node_modules/

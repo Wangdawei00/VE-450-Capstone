@@ -1,0 +1,14 @@
+{% extends "base2.html" %}
+
+{% block title %} Create/Reset {% endblock title %}
+{% block head %}
+    <div class="right up" style="float:right">
+        login
+    </div>
+{% endblock head %}
+
+
+{% block contents %}
+    <div id="form"> Loading form</div>
+    <script type="module" src="{{ url_for("static", filename="js/account.bundle.js") }}"></script>
+{% endblock contents %}

@@ -10,7 +10,13 @@ APPLICATION_ROOT = '/'
 SECRET_KEY = secrets.token_bytes(24)
 # SECRET_KEY = b'\xe7\xc1\xcaK\xa0Qd\xce\x8e\x10\xe3wo\x9b' \
 #              b'\xdf{\xceC?\xad\xd4`=\x0c'
-# SESSION_COOKIE_NAME = 'login'
+SESSION_COOKIE_NAME = 'email'
+MAIL_SERVER = 'smtp.163.com'
+MAIL_PORT = 25
+MAIL_USERNAME = 'wdwdawei01'
+MAIL_PASSWORD = 'STIUSDOTYKWXIOBH'
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False
 
 # File Upload to var/uploads/
 ASD_ROOT = pathlib.Path(__file__).resolve().parent.parent

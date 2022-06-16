@@ -10,10 +10,13 @@
 {% block contents %}
     <!-- DO NOT CHANGE THIS (aside from styling) -->
     <form action="/accounts/?target=%2F" method="post" enctype="multipart/form-data">
+        <br>Email:
         <input type="text" name="username" required/>
+        <br>Password:
         <input type="password" name="password" required/>
         <input type="submit" value="login"/>
         <input type="hidden" name="operation" value="login"/>
     </form>
     <p><a href="/accounts/create/"> Don't have an account? <b>Sign up</b> </a></p>
+    <p><a href="/accounts/reset/">Forget Password? <b>Click Here!</b></a>?</p>
 {% endblock contents %}

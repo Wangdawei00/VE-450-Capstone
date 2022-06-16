@@ -2,14 +2,14 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE users
 (
-    username VARCHAR(20)  NOT NULL PRIMARY KEY,
-    email    VARCHAR(40)  NOT NULL,
-    password VARCHAR(256) NOT NULL
+    email    VARCHAR(40)  NOT NULL PRIMARY KEY,
+    password VARCHAR(256) NOT NULL,
+    OTP      VARCHAR(10)
 );
 
 CREATE TABLE data
 (
     owner VARCHAR(20) NOT NULL,
     data VARCHAR(1000),
-    FOREIGN KEY (owner) REFERENCES users (username) ON DELETE CASCADE
+    FOREIGN KEY (owner) REFERENCES users (email) ON DELETE CASCADE
 );

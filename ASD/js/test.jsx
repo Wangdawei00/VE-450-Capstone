@@ -42,6 +42,7 @@ class Test extends React.Component {
     seeso.setMonitorSize(16);
     seeso.setFaceDistance(50);
     seeso.setCameraPosition(window.outerWidth / 2, true);
+    console.log(`outerWidth=${window.outerWidth}\nouterHeight=${window.outerHeight}`)
     seeso.startTracking(this.onGaze, this.onDebug)
     seeso.setCalibrationData(calibration_data);
     this.setState({initialization_success: true})

@@ -2,10 +2,13 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: ["regenerator-runtime/runtime.js", "./ASD/js/main.jsx"],
+  entry: {
+    main: ["regenerator-runtime/runtime.js", "./ASD/js/main.jsx"],
+    account: "./ASD/js/account.jsx"
+  },
   output: {
     path: path.join(__dirname, '/ASD/static/js/'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
