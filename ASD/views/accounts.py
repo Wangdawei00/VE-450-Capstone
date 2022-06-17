@@ -7,8 +7,6 @@ import flask
 import ASD
 
 
-
-
 def hash_password(algorithm, salt, password_raw):
     """
     Hash password.
@@ -41,15 +39,21 @@ def new_login(connection):
                                         flask.request.form['password'])
     if false_password_hash != password_hash:
         flask.abort(403)
-    flask.session[ASD.app.config.session_cookie_name] = flask.request.form['username']
+    flask.session['email'] = flask.request.form['username']
 
 
 @ASD.app.route("/accounts/login/")
 def login():
-    if ASD.app.config.session_cookie_name in flask.session:
+    if 'email' in flask.session:
         return flask.redirect(flask.url_for('index'))
     return flask.render_template("login.html")
 
+
+@ASD.app.route("/accounts/reset/")
+def account_reset():
+    if 'email' in flask.session:
+        return flask.redirect(flask.url_for('index'))
+    return flask.render_template("create_reset_js.html")
 
 
 @ASD.app.route("/accounts/", methods=['POST'])
@@ -58,10 +62,6 @@ def account():
     connection.execute("PRAGMA foreign_keys = ON;")
     if flask.request.form['operation'] == 'login':
         new_login(connection)
-    if flask.request.form['operation'] == 'create':
-        new_create(connection)
-    if flask.request.form['operation'] == 'reset':
-        new_reset(connection)
     if not flask.request.args.get('target'):
         return flask.redirect(flask.url_for('index'))
     return flask.redirect(flask.request.args.get('target'))

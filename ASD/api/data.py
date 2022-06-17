@@ -3,8 +3,8 @@ import ASD
 
 
 @ASD.app.route("/api/v1/d/", methods=["POST"])
-def email():
-    email = ASD.app.config.session_cookie_name
+def data():
+    email = 'email'
     if email not in flask.session:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
     x_list = flask.request.get_json()["x_data"]

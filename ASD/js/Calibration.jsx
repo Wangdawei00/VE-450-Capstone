@@ -45,7 +45,7 @@ class Calibration extends React.Component {
         </button>
       </div>
     } else {
-      return <Test calibration_data={calibration_data} license={license}/>
+      return <Test data_num={50} calibration_data={calibration_data} license={license}/>
     }
   }
 }

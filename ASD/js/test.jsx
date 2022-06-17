@@ -59,13 +59,14 @@ class Test extends React.Component {
 
   saveData() {
     const { data_num } = this.props;
+    const real_data_num = parseInt(data_num)
     const { x, y, x_list, y_list } = this.state;
     x_list.push(x / window.outerWidth);
     y_list.push(y / window.outerHeight);
     this.setState({ x_list: x_list, y_list: y_list });
 
     // recursively call saveData until a specified amount of data have been collected
-    if (x_list.length() < data_num) {
+    if (x_list.length() < real_data_num) {
       setTimeout(this.saveData, 500);
     } else {
       // send data to backend
@@ -123,7 +124,7 @@ class Test extends React.Component {
 Test.propTypes = {
   license: PropTypes.string.isRequired,
   calibration_data: PropTypes.string.isRequired,
-  data_num: PropTypes.int.isRequired,
+  data_num: PropTypes.string.isRequired,
 };
 
 export default Test;

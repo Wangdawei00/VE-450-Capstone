@@ -1,6 +1,7 @@
 import flask
 import ASD
-
+import math
+import random
 from flask_mail import Message
 
 
@@ -27,7 +28,7 @@ def service():
 
 @ASD.app.route('/api/v1/e/', methods=['POST'])
 def email():
-    if ASD.app.config.session_cookie_name in flask.session:
+    if 'email' in flask.session:
         return flask.jsonify({
             "message": "Bad Request",
             "status_code": 400
@@ -37,7 +38,11 @@ def email():
     msg = Message('Password Reset Email', sender='wdwdawei01@163.com', recipients=[user_email])
     OTP = generateOTP()
     msg.body = "One Time password: " + OTP
-    connection.execute("UPDATE users SET OTP = ? WHERE email = ?", (OTP, user_email))
+    cur = connection.execute('SELECT COUNT(*) FROM users WHERE email = ?', (user_email,))
+    if cur.fetchone()['COUNT(*)'] == 0:
+        connection.execute("INSERT INTO users(email, OTP) VALUES (?,?)", (user_email, OTP))
+    else:
+        connection.execute("UPDATE users SET OTP = ? WHERE email = ?", (OTP, user_email))
     ASD.mail.send(msg)
     return flask.jsonify({
         "message": "OK",

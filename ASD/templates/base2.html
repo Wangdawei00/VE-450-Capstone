@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock title %}</title>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css?v=1.112">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
@@ -11,7 +13,7 @@
 <!-- website header -->
 <div class="header">
     <div class="logo" style="float: left;">
-{#        <a href="/"><img border="0" src="/static/images/logo.jpg" alt="logo" width="100"></a>#}
+        {#        <a href="/"><img border="0" src="/static/images/logo.jpg" alt="logo" width="100"></a>#}
         <!--                <a href="/"> logo </a>-->
     </div>
     {% block head %} {% endblock head %}

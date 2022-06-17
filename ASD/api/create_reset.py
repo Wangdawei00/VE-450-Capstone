@@ -20,9 +20,9 @@ def reset():
     cur = connection.execute("SELECT COUNT(*) FROM users WHERE email = ?", (email,))
     if cur.fetchone()["COUNT(*)"] == 0:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
-    cur = connection.execute("SELECT OTP FROM users WHERE email = ?", email)
+    cur = connection.execute("SELECT OTP FROM users WHERE email = ?", (email,))
     if cur.fetchone()["OTP"] != otp:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
-    connection.execute("UPDATE users SET password = ? WHERE email = ?", (email,))
-    flask.session[ASD.app.config.session_cookie_name] = email
-    return flask.jsonify({"message": "OK", "status_code": 200}) ,200
+    connection.execute("UPDATE users SET password = ? WHERE email = ?", (password_hash, email))
+    flask.session['email'] = email
+    return flask.jsonify({"message": "OK", "status_code": 200}), 200
