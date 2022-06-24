@@ -11,11 +11,11 @@
 # stop on errors, print commands
 set -Eeuo pipefail
 set -x
-#npx webpack
-./bin/asddb reset
-#if [ ! -f "var/dsp.sqlite3" ]; then
-#  ./bin/dspdb create
-#fi
+npx webpack
+#./bin/asddb reset
+if [ ! -f "var/asd.sqlite3" ]; then
+  ./bin/asddb create
+fi
 
 export FLASK_ENV=production
 export FLASK_APP=ASD

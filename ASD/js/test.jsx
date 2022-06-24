@@ -3,6 +3,8 @@ import React from "react";
 import EasySeeSo from "seeso/easy-seeso";
 import PropTypes from "prop-types";
 import "regenerator-runtime/runtime";
+import Button from 'react-bootstrap/Button'
+import Toggle from 'react-bootstrap-toggle'
 
 class Test extends React.Component {
   constructor(props) {
@@ -14,41 +16,48 @@ class Test extends React.Component {
       y: NaN,
       x_list: [],
       y_list: [],
+      stimuli_num: 0,
+      cameraTop: true
     };
     this.onGaze = this.onGaze.bind(this);
     this.afterInitialized = this.afterInitialized.bind(this);
     this.saveData = this.saveData.bind(this);
+    this.startTesting = this.startTesting.bind(this);
+    this.onToggle = this.onToggle.bind(this);
   }
 
   componentDidMount() {
-    const { license } = this.props;
-    const { seeso } = this.state;
+    const {license} = this.props;
+    const {seeso} = this.state;
     // Don't forget to enter your license key.
     seeso.init(license, this.afterInitialized, this.afterFailed);
+    fetch('/api/v1/c/',{
+      credentials:'same-origin',
+    }).then((response)=>{
+      if(response.ok)
+    })
   }
 
   onGaze(gazeInfo) {
     this.setState({
-      x: gazeInfo.x,
-      y: gazeInfo.y,
+      x: gazeInfo.x, y: gazeInfo.y,
     });
   }
 
-  onDebug(FPS, latency_min, latency_max, latency_avg) {}
+  onDebug(FPS, latency_min, latency_max, latency_avg) {
+  }
 
   afterInitialized() {
     console.log("success");
-    const { seeso } = this.state;
-    const { calibration_data } = this.props;
+    const {seeso} = this.state;
+    const {calibration_data} = this.props;
     seeso.setMonitorSize(16);
     seeso.setFaceDistance(50);
     seeso.setCameraPosition(window.outerWidth / 2, true);
-    console.log(
-      `outerWidth=${window.outerWidth}\nouterHeight=${window.outerHeight}`
-    );
-    seeso.startTracking(this.onGaze, this.onDebug);
+    // console.log(`outerWidth=${window.outerWidth}\nouterHeight=${window.outerHeight}`);
     seeso.setCalibrationData(calibration_data);
-    this.setState({ initialization_success: true });
+    seeso.startTracking(this.onGaze, this.onDebug);
+    this.setState({initialization_success: true});
 
     setTimeout(this.saveData, 500);
   }
@@ -58,25 +67,22 @@ class Test extends React.Component {
   }
 
   saveData() {
-    const { data_num } = this.props;
+    const {data_num} = this.props;
     const real_data_num = parseInt(data_num)
-    const { x, y, x_list, y_list } = this.state;
+    const {x, y, x_list, y_list} = this.state;
     x_list.push(x / window.outerWidth);
     y_list.push(y / window.outerHeight);
-    this.setState({ x_list: x_list, y_list: y_list });
+    this.setState({x_list: x_list, y_list: y_list});
 
     // recursively call saveData until a specified amount of data have been collected
-    if (x_list.length() < real_data_num) {
+    if (x_list.length < real_data_num) {
       setTimeout(this.saveData, 500);
     } else {
       // send data to backend
       fetch("/api/v1/d/", {
-        credentials: "same-origin",
-        method: "POST",
-        headers: {
+        credentials: "same-origin", method: "POST", headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ x_data: x_list, y_data: y_list }),
+        }, body: JSON.stringify({x_data: x_list, y_data: y_list}),
       })
         .then((response) => {
           // console.log(response);
@@ -87,20 +93,8 @@ class Test extends React.Component {
     }
   }
 
-  callCalibrationPage() {
-    const { license } = this.props;
-    // static function.
-    // Because the web page is moved. (https://calibration.seeso.io/#/service)
-    EasySeeSo.openCalibrationPage(
-      license,
-      "YOUR_USER_ID",
-      "YOUR_REDIRECT_URL",
-      5
-    ); // 5 is number of calibration points
-  }
-
-  render() {
-    const { initialization_success, x, y } = this.state;
+  /*render() {
+    const {initialization_success, x, y} = this.state;
     if (initialization_success) {
       return (
         <div>
@@ -111,13 +105,37 @@ class Test extends React.Component {
             id='red_dot'
             src='/static/images/red_dot.jpg'
             alt='No image'
-            style={{ top: y, left: x }}
+            style={{top: y, left: x}}
           />
         </div>
       );
     } else {
       return <div>Initialization failed! Check license!</div>;
     }
+  }*/
+  startTesting() {
+    this.setState({
+      stimuli_num: 1
+    })
+  }
+
+  onToggle() {
+    const {cameraTop} = this.state;
+    this.setState({
+      cameraTop: !cameraTop
+    })
+  }
+
+  render() {
+    const {stimuli_num, cameraTop} = this.state;
+    return <div>
+      {stimuli_num === 0 && <div>
+        <Button onClick={this.startTesting}> Click here to start Test</Button>
+        <h1>Camera Position: </h1>
+        <Toggle onClick={this.onToggle} on={<h2>Top</h2>} off={<h2>Bottom</h2>} active={cameraTop}/>
+      </div>}
+      {}
+    </div>
   }
 }
 

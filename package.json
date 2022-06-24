@@ -22,6 +22,7 @@
     "react": "17.0.1",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-switch": "^15.5.3",
+    "react-bootstrap-toggle": "^2.3.2",
     "react-dom": "17.0.1",
     "react-switch": "^6.0.0",
     "regenerator-runtime": "^0.13.9",

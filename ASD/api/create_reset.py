@@ -1,9 +1,9 @@
-import imp
-from importlib import import_module
-from sqlite3 import connect
-import ASD
-import flask
+import random
 import uuid
+
+import flask
+
+import ASD
 from ASD.views.accounts import hash_password
 
 
@@ -16,6 +16,7 @@ def reset():
     algorithm = "sha512"
     salt = uuid.uuid4().hex
     password_hash = hash_password(algorithm, salt, password_raw)
+    password_sql = '$'.join([algorithm, salt, password_hash])
     connection = ASD.model.get_db()
     cur = connection.execute("SELECT COUNT(*) FROM users WHERE email = ?", (email,))
     if cur.fetchone()["COUNT(*)"] == 0:
@@ -23,6 +24,7 @@ def reset():
     cur = connection.execute("SELECT OTP FROM users WHERE email = ?", (email,))
     if cur.fetchone()["OTP"] != otp:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
-    connection.execute("UPDATE users SET password = ? WHERE email = ?", (password_hash, email))
+    connection.execute("UPDATE users SET password = ? WHERE email = ?", (password_sql, email))
+    connection.execute('INSERT INTO data(owner, class) VALUES (?,?)', (email, random.randint(0, 4)))
     flask.session['email'] = email
     return flask.jsonify({"message": "OK", "status_code": 200}), 200
