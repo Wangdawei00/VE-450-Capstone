@@ -25,6 +25,5 @@ def reset():
     if cur.fetchone()["OTP"] != otp:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
     connection.execute("UPDATE users SET password = ? WHERE email = ?", (password_sql, email))
-    connection.execute('INSERT INTO data(owner, class) VALUES (?,?)', (email, random.randint(0, 4)))
     flask.session['email'] = email
     return flask.jsonify({"message": "OK", "status_code": 200}), 200

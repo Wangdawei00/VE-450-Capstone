@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import EasySeeSo from "seeso/easy-seeso"
 import Test from "./test";
+import Button from 'react-bootstrap/button'
+import EasySeeSo from "seeso/easy-seeso";
+
+const max_classify = 4
+
+
 
 class Calibration extends React.Component {
   constructor(props) {
@@ -15,7 +20,6 @@ class Calibration extends React.Component {
 
   Calibrate() {
     const {license} = this.props;
-    // const {seeso} = this.state;
     const userId = 'wdwdawei@umich.edu'; // ex) 5e9easf293
     const redirectUrl = window.location.href;
     const calibrationPoint = 5;
@@ -40,12 +44,14 @@ class Calibration extends React.Component {
     const {calibration_data} = this.state;
     if (calibration_data === "") {
       return <div>
-        <button onClick={this.Calibrate}>
-          Click to Start Calibration and Testing!
-        </button>
+        <Button onClick={this.Calibrate}>
+          开始校准
+        </Button>
       </div>
     } else {
-      return <Test data_num={50} calibration_data={calibration_data} license={license}/>
+      return <Test calibration_data={calibration_data} license={license}
+                   max_classify={max_classify}
+                   max_stimuli_num={5} millisecond_per_stimuli={5000} millisecond_per_sample={100}/>
     }
   }
 }

@@ -4,38 +4,46 @@ import EasySeeSo from "seeso/easy-seeso";
 import PropTypes from "prop-types";
 import "regenerator-runtime/runtime";
 import Button from 'react-bootstrap/Button'
-import Toggle from 'react-bootstrap-toggle'
+import Form from 'react-bootstrap/form'
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 class Test extends React.Component {
   constructor(props) {
     super(props);
+    const {max_classify} = this.props
     this.state = {
       initialization_success: false,
+      name: '',
+      classify: getRandomInt(max_classify),
       seeso: new EasySeeSo(),
       x: NaN,
       y: NaN,
       x_list: [],
       y_list: [],
-      stimuli_num: 0,
-      cameraTop: true
+      stimuli_num: -1,
+      // cameraTop: true,
+      finished: false,
+      finished_uploading: false
     };
+    this.onChange = this.onChange.bind(this);
     this.onGaze = this.onGaze.bind(this);
     this.afterInitialized = this.afterInitialized.bind(this);
     this.saveData = this.saveData.bind(this);
     this.startTesting = this.startTesting.bind(this);
-    this.onToggle = this.onToggle.bind(this);
   }
 
   componentDidMount() {
+    const elem = document.documentElement
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    }
     const {license} = this.props;
     const {seeso} = this.state;
     // Don't forget to enter your license key.
     seeso.init(license, this.afterInitialized, this.afterFailed);
-    fetch('/api/v1/c/',{
-      credentials:'same-origin',
-    }).then((response)=>{
-      if(response.ok)
-    })
   }
 
   onGaze(gazeInfo) {
@@ -67,27 +75,27 @@ class Test extends React.Component {
   }
 
   saveData() {
-    const {data_num} = this.props;
-    const real_data_num = parseInt(data_num)
-    const {x, y, x_list, y_list} = this.state;
+    const {max_stimuli_num, millisecond_per_sample, millisecond_per_stimuli} = this.props;
+    const {x, y, x_list, y_list, name} = this.state;
     x_list.push(x / window.outerWidth);
     y_list.push(y / window.outerHeight);
     this.setState({x_list: x_list, y_list: y_list});
-
+    console.log('Sample')
+    const data_num = max_stimuli_num * millisecond_per_stimuli / millisecond_per_sample;
     // recursively call saveData until a specified amount of data have been collected
-    if (x_list.length < real_data_num) {
-      setTimeout(this.saveData, 500);
+    if (x_list.length < data_num) {
+      setTimeout(this.saveData, millisecond_per_sample);
     } else {
       // send data to backend
       fetch("/api/v1/d/", {
         credentials: "same-origin", method: "POST", headers: {
           "Content-Type": "application/json",
-        }, body: JSON.stringify({x_data: x_list, y_data: y_list}),
+        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name}),
       })
         .then((response) => {
           // console.log(response);
           if (!response.ok) throw Error(response.statusText);
-          // TODO: show finish screen
+          this.setState({finished_uploading: true})
         })
         .catch((error) => console.log(error));
     }
@@ -114,27 +122,59 @@ class Test extends React.Component {
     }
   }*/
   startTesting() {
-    this.setState({
-      stimuli_num: 1
-    })
+    const {millisecond_per_stimuli} = this.props
+    const {name, stimuli_num, max_stimuli_num} = this.state;
+    if (name === '') {
+      alert('姓名不能为空！')
+      return
+    }
+    if (stimuli_num === max_stimuli_num) {
+      this.setState({
+        finished: true
+      })
+    } else {
+      this.setState({
+        stimuli_num: stimuli_num + 1
+      })
+      setTimeout(this.saveData, 0)
+      setTimeout(this.startTesting, millisecond_per_stimuli)
+    }
   }
 
-  onToggle() {
-    const {cameraTop} = this.state;
+  onChange(event) {
+    event.preventDefault();
+    const name = event.target.value;
     this.setState({
-      cameraTop: !cameraTop
+      name: name
     })
   }
 
   render() {
-    const {stimuli_num, cameraTop} = this.state;
+    const {stimuli_num, name, finished, finished_uploading, classify} = this.state;
+    const {max_classify, max_stimuli_num} = this.props
+
     return <div>
-      {stimuli_num === 0 && <div>
-        <Button onClick={this.startTesting}> Click here to start Test</Button>
-        <h1>Camera Position: </h1>
-        <Toggle onClick={this.onToggle} on={<h2>Top</h2>} off={<h2>Bottom</h2>} active={cameraTop}/>
+      {stimuli_num === -1 && <div>
+        <Form onSubmit={this.startTesting}>
+          <Form.Group>
+            <h2>请输入孩子的姓名：</h2>
+            <Form.Control type="text" value={name} onChange={this.onChange}/>
+          </Form.Group>
+        </Form>
+        <Button onClick={this.startTesting}> 开始测试</Button>
       </div>}
-      {}
+      {!finished && stimuli_num >= 0 && <div>
+        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`} alt="no image"/>
+        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/2.jpg`} alt="no image"/>
+      </div>}
+      {finished && !finished_uploading && <div>完成测试，等待上传数据。。。</div>}
+      {finished && finished_uploading && <div>
+        <p>上传成功！</p>
+        <Button onClick={() => {
+          window.location.replace('/')
+        }
+        }>继续测试</Button>
+      </div>}
     </div>
   }
 }
@@ -142,7 +182,11 @@ class Test extends React.Component {
 Test.propTypes = {
   license: PropTypes.string.isRequired,
   calibration_data: PropTypes.string.isRequired,
-  data_num: PropTypes.string.isRequired,
+  // data_num: PropTypes.number.isRequired,
+  millisecond_per_stimuli: PropTypes.number.isRequired,
+  millisecond_per_sample: PropTypes.number.isRequired,
+  max_classify: PropTypes.number.isRequired,
+  max_stimuli_num: PropTypes.number.isRequired
 };
 
 export default Test;

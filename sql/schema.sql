@@ -9,9 +9,8 @@ CREATE TABLE users
 
 CREATE TABLE data
 (
-    owner VARCHAR(20) NOT NULL,
+    owner VARCHAR(20) NOT NULL PRIMARY KEY ,
     class INTEGER NOT NULL,
     xdata VARCHAR(1000),
-    ydata VARCHAR(1000),
-    FOREIGN KEY (owner) REFERENCES users (email) ON DELETE CASCADE
+    ydata VARCHAR(1000)
 );

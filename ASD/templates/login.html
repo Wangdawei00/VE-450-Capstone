@@ -10,13 +10,13 @@
 {% block contents %}
     <!-- DO NOT CHANGE THIS (aside from styling) -->
     <form action="/accounts/?target=%2F" method="post" enctype="multipart/form-data">
-        <br>Email:
+        <br>电子邮箱:
         <input type="text" name="username" required/>
-        <br>Password:
+        <br>密码:
         <input type="password" name="password" required/>
         <input type="submit" value="login"/>
         <input type="hidden" name="operation" value="login"/>
     </form>
-    <p><a href="/accounts/reset/"> Don't have an account? <b>Sign up</b> </a></p>
-    <p><a href="/accounts/reset/">Forget Password? <b>Click Here!</b></a>?</p>
+    <p><a href="/accounts/reset/"> 没有账号？<b>注册</b> </a></p>
+    <p><a href="/accounts/reset/"> 忘记密码？</a></p>
 {% endblock contents %}
