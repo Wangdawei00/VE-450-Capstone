@@ -1,22 +1,46 @@
 {% extends "base2.html" %}
 
 {% block title %} Login {% endblock title %}
-{% block head %}
-    <div class="right up" style="float:right">
-        login
-    </div>
-{% endblock head %}
+
+
+{#{% block head %}#}
+{# <div class="col-10">#}
+    {# login#}
+    {# </div>#}
+{#{% endblock head %}#}
 
 {% block contents %}
-    <!-- DO NOT CHANGE THIS (aside from styling) -->
-    <form action="/accounts/?target=%2F" method="post" enctype="multipart/form-data">
-        <br>电子邮箱:
-        <input type="text" name="username" required/>
-        <br>密码:
-        <input type="password" name="password" required/>
-        <input type="submit" value="login"/>
-        <input type="hidden" name="operation" value="login"/>
-    </form>
-    <p><a href="/accounts/reset/"> 没有账号？<b>注册</b> </a></p>
-    <p><a href="/accounts/reset/"> 忘记密码？</a></p>
+<!-- DO NOT CHANGE THIS (aside from styling) -->
+
+<div class="container-row">
+    <div class="item-row">
+        <div class="container-col">
+            <form action="/accounts/?target=%2F" method="post" enctype="multipart/form-data">
+                <div class="item-col container-row">
+                    <p class="item-row">电子邮箱: </p>
+                    <input class="item-row" type="email" name="username" required />
+                </div>
+                <div class="item-col container-row">
+                    <p class="item-row">密码: </p>
+                    <input class="item-row" type="password" name="password" required />
+                </div>
+                <div class="item-col container-row">
+                    <button class="btn btn-primary" type="submit" value="login">登录</button>
+                </div>
+                <div class="item-col container-row">
+                    <input type="hidden" name="operation" value="login" />
+                </div>
+            </form>
+            <div class="item-col">
+                <a href="/accounts/reset/"> 没有账号？<b>注册</b> </a>
+            </div>
+            <div class="item-col">
+                <a href="/accounts/reset/"> 忘记密码？</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 {% endblock contents %}
