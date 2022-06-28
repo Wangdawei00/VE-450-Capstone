@@ -89,13 +89,6 @@ class Test extends React.Component {
       })
       // console.log(`stimuli_num: ${stimuli_num + 1}`)
     }
-    console.log(`stimuli_num: ${stimuli_num}`)
-    console.log(`max_stimuli_num: ${max_stimuli_num}`)
-    if (stimuli_num >= max_stimuli_num) {
-      this.setState({
-        finished: true
-      })
-    }
     if (!isNaN(x) && !isNaN(y)) {
       x_list.push(x / window.outerWidth);
       y_list.push(y / window.outerHeight);
@@ -106,6 +99,9 @@ class Test extends React.Component {
     if (x_list.length < data_num) {
       setTimeout(this.saveData, millisecond_per_sample);
     } else if (x_list.length === data_num) {
+      this.setState({
+        finished: true
+      })
       // send data to backend
       console.log(x_list)
       fetch("/api/v1/d/", {
