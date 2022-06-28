@@ -43,6 +43,11 @@ def email():
         connection.execute("INSERT INTO users(email, OTP) VALUES (?,?)", (user_email, OTP))
     else:
         connection.execute("UPDATE users SET OTP = ? WHERE email = ?", (OTP, user_email))
+
+    with open('log.txt', 'a') as log:
+        log.write(str(msg))
+        log.write("\n")
+
     ASD.mail.send(msg)
     return flask.jsonify({
         "message": "OK",
