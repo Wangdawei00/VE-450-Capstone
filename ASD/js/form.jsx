@@ -1,8 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
-import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 
 class Forms extends React.Component {
@@ -117,7 +114,7 @@ class Forms extends React.Component {
     } = this.state;
     return (
       <div>
-        <p>Email:</p>
+        <p>电子邮箱：</p>
         <Form onSubmit={this.onSubmitEmail}>
           <Form.Group>
             <Form.Control type='text' value={email_value} onChange={this.onChangeEmail}/>
@@ -125,23 +122,23 @@ class Forms extends React.Component {
         <Button onClick={this.onSubmitEmail}>Send Email</Button>
         <Form onSubmit={this.onSubmitForm}>
           <Form.Group>
-            <p>One Time Password:</p>
+            <p>一次性密码：</p>
             <Form.Control type="text" value={otp} onChange={this.onChangeOTP}/>
-            <p>New Password:</p>
+            <p>新密码：</p>
             <Form.Control type="password" value={password} onChange={this.onChangePassword}/>
-            <p>Confirm Password:</p>
+            <p>确认新密码：</p>
             <Form.Control type="password" value={confirm_password} onChange={this.onChangeConfirmPassword}/>
-            {password === confirm_password && <p>Password Matched!</p>}
-            {password !== confirm_password && <p>Password Not Match!</p>}
+            {password === confirm_password && <p>密码匹配成功！</p>}
+            {password !== confirm_password && <p><b>密码不匹配</b></p>}
           </Form.Group>
         </Form>
         {(password !== confirm_password || password === '') && (
           <Button onClick={this.onSubmitForm} disabled>
-            Create/Reset Account
+            创建/重设账号
           </Button>
         )}
         {password === confirm_password && password !== '' && (
-          <Button onClick={this.onSubmitForm}>Create/Reset Account</Button>
+          <Button onClick={this.onSubmitForm}>创建/重设账号</Button>
         )}
       </div>
     );

@@ -56,7 +56,7 @@ class Calibration extends React.Component {
   }
 }
 
-Calibration.PropTypes = {
+Calibration.propTypes = {
   license: PropTypes.string.required,
 }
 

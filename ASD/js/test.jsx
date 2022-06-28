@@ -25,21 +25,21 @@ class Test extends React.Component {
       y_list: [],
       stimuli_num: -1,
       // cameraTop: true,
+      times_to_call_saveData: 0,
       finished: false,
-      finished_uploading: false
+      finished_uploading: false,
+      // full_screen: false
     };
     this.onChange = this.onChange.bind(this);
     this.onGaze = this.onGaze.bind(this);
     this.afterInitialized = this.afterInitialized.bind(this);
     this.saveData = this.saveData.bind(this);
+    this.fullScreen = this.fullScreen.bind(this)
     this.startTesting = this.startTesting.bind(this);
   }
 
   componentDidMount() {
-    const elem = document.documentElement
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    }
+
     const {license} = this.props;
     const {seeso} = this.state;
     // Don't forget to enter your license key.
@@ -67,7 +67,7 @@ class Test extends React.Component {
     seeso.startTracking(this.onGaze, this.onDebug);
     this.setState({initialization_success: true});
 
-    setTimeout(this.saveData, 500);
+    // setTimeout(this.saveData, 500);
   }
 
   afterFailed() {
@@ -76,21 +76,38 @@ class Test extends React.Component {
 
   saveData() {
     const {max_stimuli_num, millisecond_per_sample, millisecond_per_stimuli} = this.props;
-    const {x, y, x_list, y_list, name} = this.state;
-    x_list.push(x / window.outerWidth);
-    y_list.push(y / window.outerHeight);
-    this.setState({x_list: x_list, y_list: y_list});
-    console.log('Sample')
+    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData} = this.state;
+    this.setState({
+      times_to_call_saveData: times_to_call_saveData + 1
+    })
+    // console.log(`times_to_call_saveData: ${times_to_call_saveData + 1}`)
+    if (times_to_call_saveData >= (stimuli_num + 1) * millisecond_per_stimuli / millisecond_per_sample) {
+      this.setState({
+        stimuli_num: stimuli_num + 1
+      })
+      // console.log(`stimuli_num: ${stimuli_num + 1}`)
+    }
+    if (stimuli_num >= max_stimuli_num) {
+      this.setState({
+        finished: true
+      })
+    }
+    if (!isNaN(x) && !isNaN(y)) {
+      x_list.push(x / window.outerWidth);
+      y_list.push(y / window.outerHeight);
+      this.setState({x_list: x_list, y_list: y_list});
+    }
     const data_num = max_stimuli_num * millisecond_per_stimuli / millisecond_per_sample;
     // recursively call saveData until a specified amount of data have been collected
     if (x_list.length < data_num) {
       setTimeout(this.saveData, millisecond_per_sample);
-    } else {
+    } else if (x_list.length === data_num) {
       // send data to backend
+      console.log(x_list)
       fetch("/api/v1/d/", {
         credentials: "same-origin", method: "POST", headers: {
           "Content-Type": "application/json",
-        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name}),
+        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name, classify: classify}),
       })
         .then((response) => {
           // console.log(response);
@@ -99,46 +116,16 @@ class Test extends React.Component {
         })
         .catch((error) => console.log(error));
     }
+
   }
 
-  /*render() {
-    const {initialization_success, x, y} = this.state;
-    if (initialization_success) {
-      return (
-        <div>
-          <h2>Gaze Information Below</h2>
-          <h2>x: {x}</h2>
-          <h2>y: {y}</h2>
-          <img
-            id='red_dot'
-            src='/static/images/red_dot.jpg'
-            alt='No image'
-            style={{top: y, left: x}}
-          />
-        </div>
-      );
-    } else {
-      return <div>Initialization failed! Check license!</div>;
-    }
-  }*/
   startTesting() {
-    const {millisecond_per_stimuli} = this.props
-    const {name, stimuli_num, max_stimuli_num} = this.state;
+    const {name} = this.state;
     if (name === '') {
       alert('姓名不能为空！')
       return
     }
-    if (stimuli_num === max_stimuli_num) {
-      this.setState({
-        finished: true
-      })
-    } else {
-      this.setState({
-        stimuli_num: stimuli_num + 1
-      })
-      setTimeout(this.saveData, 0)
-      setTimeout(this.startTesting, millisecond_per_stimuli)
-    }
+    setTimeout(this.saveData, 0)
   }
 
   onChange(event) {
@@ -149,11 +136,20 @@ class Test extends React.Component {
     })
   }
 
+  fullScreen() {
+    const elem = document.documentElement
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen()
+    }
+  }
+
   render() {
     const {stimuli_num, name, finished, finished_uploading, classify} = this.state;
-    const {max_classify, max_stimuli_num} = this.props
+    const {max_stimuli_num} = this.props
 
     return <div>
+      {!document.fullscreenElement && stimuli_num === -1 &&
+        < Button onClick={this.fullScreen}>进入全屏（推荐）</Button>}
       {stimuli_num === -1 && <div>
         <Form onSubmit={this.startTesting}>
           <Form.Group>
@@ -163,9 +159,11 @@ class Test extends React.Component {
         </Form>
         <Button onClick={this.startTesting}> 开始测试</Button>
       </div>}
-      {!finished && stimuli_num >= 0 && <div>
-        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`} alt="no image"/>
-        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/2.jpg`} alt="no image"/>
+      {!finished && stimuli_num >= 0 && <div style={{position: "fixed"}} id="stimuli">
+        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`} alt="no image"
+             id="stimuli_image"/>
+        <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/2.jpg`} alt="no image"
+             id="stimuli_image"/>
       </div>}
       {finished && !finished_uploading && <div>完成测试，等待上传数据。。。</div>}
       {finished && finished_uploading && <div>

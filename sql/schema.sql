@@ -11,6 +11,6 @@ CREATE TABLE data
 (
     owner VARCHAR(20) NOT NULL PRIMARY KEY ,
     class INTEGER NOT NULL,
-    xdata VARCHAR(1000),
-    ydata VARCHAR(1000)
+    xdata TEXT,
+    ydata TEXT
 );
