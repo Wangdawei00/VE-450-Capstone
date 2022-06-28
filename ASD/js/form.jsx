@@ -91,11 +91,11 @@ class Forms extends React.Component {
             })
         }).then((response) => {
             if (response.ok) {
-                window.location.replace("/")
+                window.location.replace("/manual/")
             } else {
                 alert("One time password invalid")
 
-                window.location.replace("/accounts/reset");
+                window.location.replace("/accounts/reset/");
             }
         });
     }

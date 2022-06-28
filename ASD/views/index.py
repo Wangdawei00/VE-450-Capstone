@@ -14,6 +14,9 @@ def index():
         return flask.redirect(flask.url_for("login"))
 
 
+@ASD.app.route('/manual/')
+def manual():
+    return flask.render_template('manual.html')
 # @ASD.app.route('/favicon.ico/')
 # def favicon():
 #     return flask.send_from_directory(ASD.app.config['ASD_ROOT'] / 'static' / 'images', 'favicon.ico')

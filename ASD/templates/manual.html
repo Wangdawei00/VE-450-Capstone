@@ -1,0 +1,50 @@
+{% extends "base2.html" %}
+
+{% block title %} Instructions {% endblock title %}
+
+{% block contents %}
+    <div class="container-row">
+        <div class="item-row instruction">
+            <h1>欢迎使用ASD诊断助手</h1>
+            <p>本网站将展示一系列图片，使用摄像头记录孩子的眼动数据，仅用于研究及诊断用途。</p>
+            <strong>
+                <h2>注意事项：</h2>
+                <ol>
+                    <li>
+                        请将摄像头置于屏幕中间上方。
+                    </li>
+                    <li>
+                        在校准和测试的时候家长需要远离屏幕以避免产生干扰。
+                    </li>
+                    <li>
+                        建议使用Chrome，Firefox，或Edge浏览器。
+                    </li>
+                </ol>
+            </strong>
+            <h2>以下为网站的使用方法：</h2>
+            <p>对于每一个孩子</p>
+            <ol>
+                <li>
+                    首先需要对摄像头进行校准。在点击继续按钮后，会来到校准页面。请选择孩子距离屏幕的大致距离，以及屏幕的大小，并请孩子观察屏幕。
+                </li>
+                <li>
+                    校准结束后，请输入孩子的姓名和已知ASD的情况，推荐全屏使用网站以便减少干扰，并点击继续按钮开始测试。
+
+                </li>
+                <li>
+                    在测试中，网站会显示若干组图片，孩子只需要观察屏幕即可。在测试结束后，结果会自动上传。请点击重新测试来记录下一个孩子的数据。
+                </li>
+            </ol>
+
+            <div class="instruction-btn">
+                <button class="btn btn-primary" onclick="jump()">继续</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script> function jump() {
+      window.location.replace('/')
+    }</script>
+{% endblock contents %}

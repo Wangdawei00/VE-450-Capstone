@@ -49,3 +49,16 @@
 img{
     width: 40%;
 }
+
+.instruction{
+    width: 80vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.instruction-btn{
+    align-self: flex-end;
+}
