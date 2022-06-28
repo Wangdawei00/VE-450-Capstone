@@ -19,14 +19,15 @@ def data():
     for i, item in enumerate(y_list):
         y_list[i] = str(y_list[i])
     name = json['name']
+    t = json['type']
     classify = json['classify']
     x_to_sql = " ".join(x_list)
     y_to_sql = " ".join(y_list)
 
     connection = ASD.model.get_db()
 
-    connection.execute('INSERT INTO data(owner, class, xdata, ydata) VALUES (?,?,?,?)',
-                       (name, classify, x_to_sql, y_to_sql))
+    connection.execute('INSERT INTO data(owner, class, xdata, ydata, type) VALUES (?,?,?,?,?)',
+                       (name, classify, x_to_sql, y_to_sql, t))
 
     return flask.jsonify({"message": "OK", "status_code": 200}), 200
 

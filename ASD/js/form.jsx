@@ -119,7 +119,7 @@ class Forms extends React.Component {
           <Form.Group>
             <Form.Control type='text' value={email_value} onChange={this.onChangeEmail}/>
           </Form.Group></Form>
-        <Button onClick={this.onSubmitEmail}>Send Email</Button>
+        <Button onClick={this.onSubmitEmail}>发送邮件</Button>
         <Form onSubmit={this.onSubmitForm}>
           <Form.Group>
             <p>一次性密码：</p>

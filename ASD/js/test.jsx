@@ -3,8 +3,9 @@ import React from "react";
 import EasySeeSo from "seeso/easy-seeso";
 import PropTypes from "prop-types";
 import "regenerator-runtime/runtime";
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -28,6 +29,7 @@ class Test extends React.Component {
       times_to_call_saveData: 0,
       finished: false,
       finished_uploading: false,
+      type: -1//0 for non-asd, 1 for asd, 2 for unknown, -1 for no selection
       // full_screen: false
     };
     this.onChange = this.onChange.bind(this);
@@ -76,7 +78,7 @@ class Test extends React.Component {
 
   saveData() {
     const {max_stimuli_num, millisecond_per_sample, millisecond_per_stimuli} = this.props;
-    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData} = this.state;
+    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData, type} = this.state;
     this.setState({
       times_to_call_saveData: times_to_call_saveData + 1
     })
@@ -107,7 +109,7 @@ class Test extends React.Component {
       fetch("/api/v1/d/", {
         credentials: "same-origin", method: "POST", headers: {
           "Content-Type": "application/json",
-        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name, classify: classify}),
+        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name, classify: classify, type: type}),
       })
         .then((response) => {
           // console.log(response);
@@ -120,9 +122,13 @@ class Test extends React.Component {
   }
 
   startTesting() {
-    const {name} = this.state;
+    const {name, type} = this.state;
     if (name === '') {
       alert('姓名不能为空！')
+      return
+    }
+    if (type === -1) {
+      alert("请选择孩子是否患有ASD")
       return
     }
     setTimeout(this.saveData, 0)
@@ -144,20 +150,40 @@ class Test extends React.Component {
   }
 
   render() {
-    const {stimuli_num, name, finished, finished_uploading, classify} = this.state;
+    const {stimuli_num, name, finished, finished_uploading, classify, type} = this.state;
     const {max_stimuli_num} = this.props
 
     return <div>
       {!document.fullscreenElement && stimuli_num === -1 &&
         < Button onClick={this.fullScreen}>进入全屏（推荐）</Button>}
       {stimuli_num === -1 && <div>
-        <Form onSubmit={this.startTesting}>
+        <Form>
           <Form.Group>
             <h2>请输入孩子的姓名：</h2>
             <Form.Control type="text" value={name} onChange={this.onChange}/>
           </Form.Group>
         </Form>
-        <Button onClick={this.startTesting}> 开始测试</Button>
+        <Dropdown>
+          <Dropdown.Toggle variant="success">
+            {type === -1 && "请选择"}
+            {type === 0 && "确认不患有ASD"}
+            {type === 1 && "确认患有ASD"}
+            {type === 2 && "未知"}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onSelect={() => this.setState({type: 0})}>
+              确认不患有ASD
+            </Dropdown.Item>
+            <Dropdown.Item onSelect={() => this.setState({type: 1})}>
+              确认患有ASD
+            </Dropdown.Item>
+            <Dropdown.Item onSelect={() => this.setState({type: 2})}>
+              未知
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <br/>
+        <Button onClick={this.startTesting}>开始测试</Button>
       </div>}
       {!finished && stimuli_num >= 0 && <div style={{position: "fixed"}} id="stimuli">
         <img src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`} alt="no image"

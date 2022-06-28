@@ -12,5 +12,6 @@ CREATE TABLE data
     owner VARCHAR(20) NOT NULL PRIMARY KEY ,
     class INTEGER NOT NULL,
     xdata TEXT,
-    ydata TEXT
+    ydata TEXT,
+    type INTEGER NOT NULL -- 0 negative, 1 positive, 2 unknown
 );
