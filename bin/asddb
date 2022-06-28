@@ -26,6 +26,7 @@ fi
 case $1 in
 "create")
     if [ ! -f "var/asd.sqlite3" ]; then
+	mkdir -p var
         sqlite3 var/asd.sqlite3 <sql/schema.sql
         sqlite3 var/asd.sqlite3 <sql/data.sql
     else
@@ -40,6 +41,7 @@ case $1 in
 
 "reset")
     rm -rf var/asd.sqlite3
+    mkdir -p var
     sqlite3 var/asd.sqlite3 <sql/schema.sql
     sqlite3 var/asd.sqlite3 <sql/data.sql
     ;;

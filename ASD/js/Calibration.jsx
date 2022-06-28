@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Test from "./test";
-import Button from 'react-bootstrap/button'
+import Button from 'react-bootstrap/Button'
 import EasySeeSo from "seeso/easy-seeso";
 
 const max_classify = 4

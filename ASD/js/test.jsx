@@ -4,7 +4,7 @@ import EasySeeSo from "seeso/easy-seeso";
 import PropTypes from "prop-types";
 import "regenerator-runtime/runtime";
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/form'
+import Form from 'react-bootstrap/Form'
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
