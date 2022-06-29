@@ -60,7 +60,7 @@ def email():
     # send the email with AWS SES
     SENDER = "deluyijason@126.com"
     RECIPIENT = flask.request.get_json()["email"]
-    AWS_REGION = "us-west-2"
+    AWS_REGION = "us-east-2"
     SUBJECT = "Password Reset Email"
 
     # The email body for recipients with non-HTML email clients.
