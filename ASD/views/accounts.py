@@ -45,14 +45,14 @@ def new_login(connection):
 @ASD.app.route("/accounts/login/")
 def login():
     if 'email' in flask.session:
-        return flask.redirect(flask.url_for('index'))
+        return flask.redirect(flask.url_for('manual'))
     return flask.render_template("login.html")
 
 
 @ASD.app.route("/accounts/reset/")
 def account_reset():
     if 'email' in flask.session:
-        return flask.redirect(flask.url_for('index'))
+        return flask.redirect(flask.url_for('manual'))
     return flask.render_template("create_reset_js.html")
 
 
@@ -63,5 +63,5 @@ def account():
     if flask.request.form['operation'] == 'login':
         new_login(connection)
     if not flask.request.args.get('target'):
-        return flask.redirect(flask.url_for('index'))
+        return flask.redirect(flask.url_for('manual'))
     return flask.redirect(flask.request.args.get('target'))
