@@ -30,6 +30,7 @@ def email():
     if "email" in flask.session:
         return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
     user_email = flask.request.get_json()["email"]
+    OTP = generateOTP()
 
     connection = ASD.model.get_db()
     cur = connection.execute(
@@ -62,7 +63,6 @@ def email():
     AWS_REGION = "us-west-2"
     SUBJECT = "Password Reset Email"
 
-    OTP = generateOTP()
     # The email body for recipients with non-HTML email clients.
     BODY_TEXT = "One Time password: " + OTP + "\r\n"
 
