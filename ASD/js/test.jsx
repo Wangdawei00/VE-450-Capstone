@@ -209,7 +209,7 @@ class Test extends React.Component {
         <div class="container-col screen-center black-background">
           <div class="item-col container-row screen-center">
             <img class="item-row"
-                 src={ url_for('static', filename=`images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`) }
+                 src="{{ url_for('static', filename=`images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`) }}"
                  alt="no image"/>
 
             <img class="item-row"
