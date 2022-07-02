@@ -6,11 +6,11 @@ import ASD
 @ASD.app.route("/api/v1/d/", methods=["POST"])
 def data():
     email = 'email'
-    if email not in flask.session:
-        return flask.jsonify({
-            "message": "Bad Request",
-            "status_code": 400
-        }), 400
+    # if email not in flask.session:
+    #     return flask.jsonify({
+    #         "message": "Bad Request",
+    #         "status_code": 400
+    #     }), 400
     json = flask.request.get_json()
     x_list = json["x_data"]
     for i, item in enumerate(x_list):
