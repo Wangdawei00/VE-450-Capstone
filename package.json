@@ -19,11 +19,11 @@
     "bootstrap": "^4.6.0",
     "moment": "2.29.3",
     "prop-types": "15.7.2",
-    "react": "17.0.1",
+    "react": "17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-switch": "^15.5.3",
     "react-bootstrap-toggle": "^2.3.2",
-    "react-dom": "17.0.1",
+    "react-dom": "17.0.2",
     "react-switch": "^6.0.0",
     "regenerator-runtime": "^0.13.9",
     "seeso": "^0.1.6"
