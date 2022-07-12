@@ -5,12 +5,9 @@ import ASD
 
 @ASD.app.route("/api/v1/d/", methods=["POST"])
 def data():
-    email = 'email'
+    email = "email"
     if email not in flask.session:
-        return flask.jsonify({
-            "message": "Bad Request",
-            "status_code": 400
-        }), 400
+        return flask.jsonify({"message": "Bad Request", "status_code": 400}), 400
     json = flask.request.get_json()
     x_list = json["x_data"]
     for i, item in enumerate(x_list):
@@ -18,18 +15,27 @@ def data():
     y_list = json["y_data"]
     for i, item in enumerate(y_list):
         y_list[i] = str(y_list[i])
-    name = json['name']
-    t = json['type']
-    classify = json['classify']
+    name = json["name"]
+    t = json["type"]
+    classify = json["classify"]
     x_to_sql = " ".join(x_list)
     y_to_sql = " ".join(y_list)
 
     connection = ASD.model.get_db()
-
-    connection.execute('INSERT INTO data(owner, class, xdata, ydata, type) VALUES (?,?,?,?,?)',
-                       (name, classify, x_to_sql, y_to_sql, t))
+    cur = connection.execute("SELECT COUNT(*) FROM data WHERE owner = ?", (name,))
+    if cur.fetchone()["COUNT(*)"] == 0:
+        connection.execute(
+            "INSERT INTO data(owner, class, xdata, ydata, type) VALUES (?,?,?,?,?)",
+            (name, classify, x_to_sql, y_to_sql, t),
+        )
+    else:
+        connection.execute(
+            "UPDATE data SET class = ?, xdata = ?, ydata = ?, type = ? WHERE owner = ?",
+            (classify, x_to_sql, y_to_sql, t, name),
+        )
 
     return flask.jsonify({"message": "OK", "status_code": 200}), 200
+
 
 # @ASD.app.route('/api/v1/c/')
 # def classification():
