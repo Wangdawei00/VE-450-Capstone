@@ -86,7 +86,7 @@ class Forms extends React.Component {
             },
             body: JSON.stringify({
                 email: email_value,
-                otp: otp,
+                // otp: otp,
                 password: password
             })
         }).then((response) => {
@@ -117,23 +117,24 @@ class Forms extends React.Component {
                 <div class="item-row container-col">
                     <div class="item-col">
                         <p>电子邮箱：</p>
-                        <Form onSubmit={this.onSubmitEmail}>
+                        {/* <Form onSubmit={this.onSubmitEmail}> */}
+                        <Form>
                             <Form.Group>
                                 <Form.Control type='email' value={email_value} onChange={this.onChangeEmail} />
                             </Form.Group>
                         </Form>
                     </div>
 
-                    <div class="item-col">
+                    {/* <div class="item-col">
                         <Button onClick={this.onSubmitEmail}>发送邮件</Button>
-                    </div>
+                    </div> */}
 
                     <Form onSubmit={this.onSubmitForm}>
                         <Form.Group>
-                            <div class="item-col">
+                            {/* <div class="item-col">
                                 <p>一次性密码：</p>
                                 <Form.Control type="text" value={otp} onChange={this.onChangeOTP} />
-                            </div>
+                            </div> */}
 
                             <div class="item-col">
                                 <p>新密码：</p>
