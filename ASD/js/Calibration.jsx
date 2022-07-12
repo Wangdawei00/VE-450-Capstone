@@ -4,7 +4,7 @@ import Test from "./test";
 import Button from 'react-bootstrap/Button'
 import EasySeeSo from "seeso/easy-seeso";
 
-const max_classify = 4
+const max_classify = 2
 
 class Calibration extends React.Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class Calibration extends React.Component {
     } else {
       return <Test calibration_data={calibration_data} license={license}
                    max_classify={max_classify}
-                   max_stimuli_num={5} millisecond_per_stimuli={5000} millisecond_per_sample={100}/>
+                   max_stimuli_num={10} millisecond_per_stimuli={5000} millisecond_per_sample={100}/>
     }
   }
 }

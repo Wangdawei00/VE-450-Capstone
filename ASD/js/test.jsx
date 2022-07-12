@@ -29,8 +29,10 @@ class Test extends React.Component {
       times_to_call_saveData: 0,
       finished: false,
       finished_uploading: false,
-      type: -1//0 for non-asd, 1 for asd, 2 for unknown, -1 for no selection
+      type: -1, //0 for non-asd, 1 for asd, 2 for unknown, -1 for no selection
       // full_screen: false
+      show_gray_img: false,
+      gray_count: 0,
     };
     this.onChange = this.onChange.bind(this);
     this.onGaze = this.onGaze.bind(this);
@@ -78,18 +80,31 @@ class Test extends React.Component {
 
   saveData() {
     const {max_stimuli_num, millisecond_per_sample, millisecond_per_stimuli} = this.props;
-    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData, type} = this.state;
+    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData, type, show_gray_img, gray_count} = this.state;
     this.setState({
       times_to_call_saveData: times_to_call_saveData + 1
     })
     // console.log(`times_to_call_saveData: ${times_to_call_saveData + 1}`)
     if (times_to_call_saveData >= (stimuli_num + 1) * millisecond_per_stimuli / millisecond_per_sample) {
       this.setState({
-        stimuli_num: stimuli_num + 1
+        stimuli_num: stimuli_num + 1,
+        show_gray_img: true,
+        gray_count: 0,
       })
       // console.log(`stimuli_num: ${stimuli_num + 1}`)
     }
-    if (!isNaN(x) && !isNaN(y)) {
+    if (show_gray_img){
+        this.setState({
+            gray_count: gray_count + 1,
+        })
+    }
+    if (gray_count === 5){
+        this.setState({
+            gray_count: 0,
+            show_gray_img: false,
+        })
+    }
+    if (!isNaN(x) && !isNaN(y) && !show_gray_img) {
       x_list.push(x / window.outerWidth);
       y_list.push(y / window.outerHeight);
       this.setState({x_list: x_list, y_list: y_list});
@@ -148,7 +163,7 @@ class Test extends React.Component {
   }
 
   render() {
-    const {stimuli_num, name, finished, finished_uploading, classify, type} = this.state;
+    const {stimuli_num, name, finished, finished_uploading, classify, type, show_gray_img} = this.state;
     const {max_stimuli_num} = this.props
 
     return <div>
@@ -205,7 +220,7 @@ class Test extends React.Component {
         </div>
       }
 
-      {!finished && stimuli_num >= 0 &&
+      {!finished && stimuli_num >= 0 && !show_gray_img &&
         <div class="container-col screen-center black-background">
           <div class="item-col container-row screen-center">
             <img class="item-row"
@@ -218,6 +233,21 @@ class Test extends React.Component {
           </div>
         </div>
       }
+
+    {!finished && stimuli_num >= 0 && show_gray_img &&
+        <div class="container-col screen-center black-background">
+          <div class="item-col container-row screen-center">
+            <img class="item-row"
+                 src={`/static/images/gray.png`}
+                 alt="no image"/>
+
+            <img class="item-row"
+                 src={`/static/images/gray.png`}
+                 alt="no image"/>
+          </div>
+        </div>
+      }
+
 
       {finished && !finished_uploading &&
         <div class="container-row">
