@@ -5,3 +5,10 @@ ASD/static/js/*.bundle.js
 *egg-info*
 node_modules/
 var/
+
+cluster-2evftrj5zfm_ClusterCsr.csr
+cluster-2evftrj5zfm_CustomerHsmCertificate.crt
+customerCA.crt
+customerCA.key
+customerCA.srl
+serverDeploy.pem
