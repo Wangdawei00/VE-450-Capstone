@@ -54,8 +54,8 @@ class Test extends React.Component {
     this.setState({
       x: gazeInfo.x, y: gazeInfo.y,
     });
-    const d = new Date();
-    console.log(d.getTime());
+    // const d = new Date();
+    // console.log(d.getTime());
   }
 
   onDebug(FPS, latency_min, latency_max, latency_avg) {
@@ -69,7 +69,7 @@ class Test extends React.Component {
     seeso.setFaceDistance(50);
     seeso.setCameraPosition(window.outerWidth / 2, true);
     // console.log(`outerWidth=${window.outerWidth}\nouterHeight=${window.outerHeight}`);
-    seeso.setCalibrationData(calibration_data);
+    //seeso.setCalibrationData(calibration_data);
     seeso.startTracking(this.onGaze, this.onDebug);
     this.setState({initialization_success: true});
 
