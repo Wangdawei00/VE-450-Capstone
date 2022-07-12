@@ -54,6 +54,8 @@ class Test extends React.Component {
     this.setState({
       x: gazeInfo.x, y: gazeInfo.y,
     });
+    const d = new Date();
+    console.log(d.getTime());
   }
 
   onDebug(FPS, latency_min, latency_max, latency_avg) {
@@ -163,10 +165,11 @@ class Test extends React.Component {
   }
 
   render() {
-    const {stimuli_num, name, finished, finished_uploading, classify, type, show_gray_img} = this.state;
+    const {stimuli_num, name, finished, finished_uploading, classify, type, show_gray_img, x, y} = this.state;
     const {max_stimuli_num} = this.props
 
     return <div>
+        <img id="red_dot" src="/static/images/red_dot.jpg" alt="No image" style={{top: y, left: x}}/>
       {stimuli_num === -1 &&
         <div class="container-row">
           <div class="container-col">
