@@ -7,9 +7,9 @@ import secrets
 APPLICATION_ROOT = '/'
 
 # Secret key for encrypting cookies
-SECRET_KEY = secrets.token_bytes(24)
-# SECRET_KEY = b'\xe7\xc1\xcaK\xa0Qd\xce\x8e\x10\xe3wo\x9b' \
-#              b'\xdf{\xceC?\xad\xd4`=\x0c'
+# SECRET_KEY = secrets.token_bytes(24)
+SECRET_KEY = b'\xe7\xc1\xcaK\xa0Qd\xce\x8e\x10\xe3wo\x9b' \
+             b'\xdf{\xceC?\xad\xd4`=\x0c'
 SESSION_COOKIE_NAME = 'email'
 MAIL_SERVER = 'smtp.163.com'
 MAIL_PORT = 25
