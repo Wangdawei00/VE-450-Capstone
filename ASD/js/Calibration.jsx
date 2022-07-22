@@ -44,7 +44,7 @@ class Calibration extends React.Component {
       return <div class="container-row">
         <div class="item-row">
           <Button onClick={this.Calibrate}>
-            开始校准
+            开始校准 (Start Calibration)
           </Button>
         </div>
       </div>

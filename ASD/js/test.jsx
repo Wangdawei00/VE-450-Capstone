@@ -137,11 +137,11 @@ class Test extends React.Component {
   startTesting() {
     const {name, type} = this.state;
     if (name === '') {
-      alert('姓名不能为空！')
+      alert('姓名不能为空！(Name cannot be empty!)')
       return
     }
     if (type === -1) {
-      alert("请选择孩子是否患有ASD")
+      alert("请选择孩子是否患有ASD (Please select the child's ASD status)")
       return
     }
     setTimeout(this.saveData, 0)
@@ -172,7 +172,7 @@ class Test extends React.Component {
           <div class="container-col">
             <div class="item-col">
               {!document.fullscreenElement && stimuli_num === -1 &&
-                < Button onClick={this.fullScreen}>进入全屏（推荐）</Button>}
+                < Button onClick={this.fullScreen}>进入全屏（推荐）(Fullscreen recommended)</Button>}
             </div>
 
             {stimuli_num === -1 &&
@@ -180,7 +180,7 @@ class Test extends React.Component {
                 <Form>
                   <Form.Group>
                     <div class="item-col">
-                      <h2>请输入孩子的姓名：</h2>
+                      <h2>请输入孩子的姓名：(Please input the child's name)</h2>
                     </div>
 
                     <div class="item-col">
@@ -192,27 +192,27 @@ class Test extends React.Component {
                 <div class="item-col container-row">
                   <Dropdown class="item-col">
                     <Dropdown.Toggle variant="success">
-                      {type === -1 && "请选择"}
-                      {type === 0 && "确认不患有ASD"}
-                      {type === 1 && "确认患有ASD"}
-                      {type === 2 && "未知"}
+                      {type === -1 && "请选择 (Select)"}
+                      {type === 0 && "确认不患有ASD (ASD Negative)"}
+                      {type === 1 && "确认患有ASD (ASD Positive)"}
+                      {type === 2 && "未知 (Unknown)"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onSelect={() => this.setState({type: 0})}>
-                        确认不患有ASD
+                        确认不患有ASD (ASD Negative)
                       </Dropdown.Item>
                       <Dropdown.Item onSelect={() => this.setState({type: 1})}>
-                        确认患有ASD
+                        确认患有ASD (ASD Positive)
                       </Dropdown.Item>
                       <Dropdown.Item onSelect={() => this.setState({type: 2})}>
-                        未知
+                        未知 (Unknown)
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
 
                 <div class="item-col container-row">
-                  <Button class="item-row" onClick={this.startTesting}>开始测试</Button>
+                  <Button class="item-row" onClick={this.startTesting}>开始测试 (Start Testing)</Button>
                 </div>
               </div>
             }
@@ -252,7 +252,7 @@ class Test extends React.Component {
       {finished && !finished_uploading &&
         <div class="container-row">
           <div class="item-row">
-            完成测试，等待上传数据。。。
+            完成测试，等待上传数据。。。(Test finished. Waiting to upload data)
           </div>
         </div>
       }
@@ -260,11 +260,11 @@ class Test extends React.Component {
       {finished && finished_uploading &&
         <div class="container-row">
           <div class="container-col">
-            <p>上传成功！</p>
+            <p>上传成功！(Upload successful)</p>
             <Button onClick={() => {
               window.location.replace('/')
             }
-            }>继续测试
+            }>继续测试 (Continue testing)
             </Button>
           </div>
         </div>

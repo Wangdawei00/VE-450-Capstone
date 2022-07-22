@@ -1,0 +1,56 @@
+{% extends "base2.html" %}
+
+{% block title %} Instructions {% endblock title %}
+
+{% block contents %}
+    <div class="container-row">
+        <div class="item-row instruction">
+            <h1>Welcome to ASD diagnosis assistant!</h1>
+            <p>In this website, a series of pictures will be shown, and the eye-tracking data of the child will be
+                collected via the web camera. The data collected will be used only for diagnostic and research
+                purposes.</p>
+            <strong>
+                <h2>Note:</h2>
+                <ol>
+                    <li>
+                        Please place the web camera at the center, above the screen.
+                    </li>
+                    <li>
+                        Parents (or teachers) should stay away from the screen during calibration and testing.
+                    </li>
+                    <li>
+                        Chrome, Firefox and Edge are recommended. (Safari is not currently supported).
+                    </li>
+                </ol>
+            </strong>
+            <h2>Website Instructions:</h2>
+            <p>For each child:</p>
+            <ol>
+                <li>
+                    First we need to calibrate the camera. After the button is pressed, the page will redirect to the
+                    calibration page. Please help select the distance of the child from the screen and the size of the
+                    screen. Then ask the child to look at the screen during calibration.
+                </li>
+                <li>
+                    After calibration, please input the child's name and his/her ASD status. Fullscreen is recommended
+                    because it involves fewer distractions. Then press the continue button to start testing.
+                </li>
+                <li>
+                    During the test, several groups of pictures will be shown, and the child should look at the screen.
+                    After the test, the result will be uploaded to the server automatically. Then you can press the
+                    retest button to test the next child.
+                </li>
+            </ol>
+            <div class="language-btn">
+                <button class="btn btn-primary" onclick="jump('/manual/')">中文</button>
+            </div>
+            <div class="instruction-btn">
+                <button class="btn btn-primary" onclick="jump()">Continue</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src={{ url_for('static', filename='js/jump.js') }}></script>
+{% endblock contents %}

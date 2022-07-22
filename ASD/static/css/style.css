@@ -62,3 +62,7 @@ img{
 .instruction-btn{
     align-self: flex-end;
 }
+
+.language-btn{
+    align-self: flex-start;
+}

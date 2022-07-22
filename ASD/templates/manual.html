@@ -17,7 +17,7 @@
                         在校准和测试的时候家长需要远离屏幕以避免产生干扰。
                     </li>
                     <li>
-                        建议使用Chrome，Firefox，或Edge浏览器。
+                        建议使用Chrome，Firefox，或Edge浏览器。(目前不支持Safari)
                     </li>
                 </ol>
             </strong>
@@ -35,16 +35,16 @@
                     在测试中，网站会显示若干组图片，孩子只需要观察屏幕即可。在测试结束后，结果会自动上传。请点击重新测试来记录下一个孩子的数据。
                 </li>
             </ol>
-
+            <div class="language-btn">
+                <button class="btn btn-primary" onclick="jump('/manual_eng/')">English</button>
+            </div>
             <div class="instruction-btn">
-                <button class="btn btn-primary" onclick="jump()">继续</button>
+                <button class="btn btn-primary" onclick="jump('/')">继续</button>
             </div>
 
         </div>
     </div>
 
 
-    <script> function jump() {
-      window.location.replace('/')
-    }</script>
+    <script src={{ url_for('static', filename='js/jump.js') }}></script>
 {% endblock contents %}

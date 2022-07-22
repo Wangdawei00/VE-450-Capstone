@@ -12,7 +12,7 @@
 set -Eeuo pipefail
 set -x
 npx webpack
-#./bin/asddb reset
+./bin/asddb reset
 if [ ! -f "var/asd.sqlite3" ]; then
   ./bin/asddb create
 fi

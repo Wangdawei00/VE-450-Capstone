@@ -1,6 +1,12 @@
-PRAGMA foreign_keys = ON;
+PRAGMA
+foreign_keys = ON;
 
-INSERT INTO users(email, password) VALUES (
-                                           'testWDW@450asd.de'
-                                           ''
-                                          )
+INSERT INTO users(email, password)
+VALUES ('behappy@450asd.de',
+        'sha512$ff1bedc60af246f49914472ed3425c4f$0003ea286c446f1e415523088f031de4f816f3324aa9d6f6fb85a5bd775b8e99fe47e15877b0fac22843f09b022fab470ee4e944b205cdc95b758fd2377a318b'),
+       ('watching@450asd.de',
+        'sha512$74f71e5c73dc4d2196101bf4cd0ffd64$f149592f6411d4e6cab7ff21609137000052f60e17ef87f5c8b26ea0af56dc6cee69b4c2e4e9a935a00944fecc3948d0977ce1a0f6d180d2d9786c9bef78cf9e'),
+       ('oyasuminasai@450asd.de',
+        'sha512$e8a945fede614527a816b4a144945421$6668306f4e8af8b16a749314068651f4721198083001b802b1221cbc630dbe53905d5b21aa59f36e9483d36388041b65b522ccf50262fb1690a6cf89150c28ce'),
+       ('atimetodance@450asd.de',
+        'sha512$bf839352910d48b78b1979e917dae68e$cadba0bbc9f1d429a32f81a210aebd0c7c8140409a0a0fd171459470b756293bcaa63096f9f4e9a0f3b6d667feb69c456a36d3b3d43f452ca714938147eba10d');

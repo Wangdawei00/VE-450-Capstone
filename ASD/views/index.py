@@ -18,6 +18,10 @@ def index():
 def manual():
     return flask.render_template('manual.html')
 
+
+@ASD.app.route('/manual_eng/')
+def manual_eng():
+    return flask.render_template('manual_eng.html')
 # @ASD.app.route('/favicon.ico/')
 # def favicon():
 #     return flask.send_from_directory(ASD.app.config['ASD_ROOT'] / 'static' / 'images', 'favicon.ico')
