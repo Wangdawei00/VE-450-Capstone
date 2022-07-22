@@ -49,13 +49,13 @@ def login():
     return flask.render_template("login.html")
 
 
-@ASD.app.route("/accounts/reset/")
-def account_reset():
-    if 'email' in flask.session:
-        return flask.redirect(flask.url_for('manual'))
-    return flask.render_template("create_reset_js.html")
-
-
+# @ASD.app.route("/accounts/reset/")
+# def account_reset():
+#     if 'email' in flask.session:
+#         return flask.redirect(flask.url_for('manual'))
+#     return flask.render_template("create_reset_js.html")
+#
+#
 @ASD.app.route("/accounts/", methods=['POST'])
 def account():
     connection = ASD.model.get_db()
