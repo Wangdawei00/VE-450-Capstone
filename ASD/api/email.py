@@ -3,8 +3,8 @@ import ASD
 import math
 import random
 from flask_mail import Message
-import boto3
-from botocore.exceptions import ClientError
+# import boto3
+# from botocore.exceptions import ClientError
 
 
 def generateOTP():

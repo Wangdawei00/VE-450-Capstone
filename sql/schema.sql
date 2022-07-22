@@ -13,5 +13,6 @@ CREATE TABLE data
     class INTEGER NOT NULL,
     xdata TEXT,
     ydata TEXT,
-    type INTEGER NOT NULL -- 0 negative, 1 positive, 2 unknown
+    type INTEGER NOT NULL, -- 0 negative, 1 positive, 2 unknown
+    flipped VARCHAR(20) NOT NULL -- 0 means obj image is on the left
 );

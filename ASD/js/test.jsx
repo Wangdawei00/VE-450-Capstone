@@ -16,6 +16,8 @@ class Test extends React.Component {
     super(props);
     const {max_classify} = this.props
     this.state = {
+      flipped: getRandomInt(2),
+      flipped_list: [],
       initialization_success: false,
       name: '',
       classify: getRandomInt(max_classify),
@@ -63,9 +65,9 @@ class Test extends React.Component {
     console.log("success");
     const {seeso} = this.state;
     const {calibration_data} = this.props;
-    seeso.setMonitorSize(16);
-    seeso.setFaceDistance(50);
-    seeso.setCameraPosition(window.outerWidth / 2, true);
+    // seeso.setMonitorSize(16);
+    // seeso.setFaceDistance(50);
+    // seeso.setCameraPosition(window.outerWidth / 2, true);
     // console.log(`outerWidth=${window.outerWidth}\nouterHeight=${window.outerHeight}`);
     seeso.setCalibrationData(calibration_data);
     seeso.startTracking(this.onGaze, this.onDebug);
@@ -80,34 +82,60 @@ class Test extends React.Component {
 
   saveData() {
     const {max_stimuli_num, millisecond_per_sample, millisecond_per_stimuli} = this.props;
-    const {x, y, x_list, y_list, name, classify, stimuli_num, times_to_call_saveData, type, show_gray_img, gray_count} = this.state;
-    this.setState({
-      times_to_call_saveData: times_to_call_saveData + 1
-    })
+    const {
+      flipped_list,
+      x,
+      y,
+      x_list,
+      y_list,
+      name,
+      classify,
+      stimuli_num,
+      times_to_call_saveData,
+      type,
+      show_gray_img,
+      gray_count
+    } = this.state;
     // console.log(`times_to_call_saveData: ${times_to_call_saveData + 1}`)
     if (times_to_call_saveData >= (stimuli_num + 1) * millisecond_per_stimuli / millisecond_per_sample) {
+      const temp = getRandomInt(2);
+      flipped_list.push(temp);
       this.setState({
+        flipped: temp,
+        flipped_list: flipped_list,
         stimuli_num: stimuli_num + 1,
         show_gray_img: true,
         gray_count: 0,
       })
       // console.log(`stimuli_num: ${stimuli_num + 1}`)
     }
-    if (show_gray_img){
-        this.setState({
-            gray_count: gray_count + 1,
-        })
+    if (show_gray_img) {
+      this.setState({
+        gray_count: gray_count + 1,
+      })
     }
-    if (gray_count === 5){
-        this.setState({
-            gray_count: 0,
-            show_gray_img: false,
-        })
+    if (gray_count === 5) {
+      this.setState({
+        gray_count: 0,
+        show_gray_img: false,
+      })
     }
-    if (!isNaN(x) && !isNaN(y) && !show_gray_img) {
-      x_list.push(x / window.outerWidth);
-      y_list.push(y / window.outerHeight);
+    if (!show_gray_img) {
+      this.setState({
+        times_to_call_saveData: times_to_call_saveData + 1
+      })
+      if (isNaN(x)) {
+        x_list.push(-1000)
+      } else {
+        x_list.push(x / window.innerWidth);
+      }
+      if (isNaN(y)) {
+        y_list.push(-1000)
+      } else {
+        y_list.push(y / window.innerHeight);
+      }
       this.setState({x_list: x_list, y_list: y_list});
+      console.log(`length: ${x_list.length}`)
     }
     const data_num = max_stimuli_num * millisecond_per_stimuli / millisecond_per_sample;
     // recursively call saveData until a specified amount of data have been collected
@@ -120,9 +148,19 @@ class Test extends React.Component {
       // send data to backend
       console.log(x_list)
       fetch("/api/v1/d/", {
-        credentials: "same-origin", method: "POST", headers: {
+        credentials: "same-origin",
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
-        }, body: JSON.stringify({x_data: x_list, y_data: y_list, name: name, classify: classify, type: type}),
+        },
+        body: JSON.stringify({
+          x_data: x_list,
+          y_data: y_list,
+          name: name,
+          classify: classify,
+          type: type,
+          flipped_list: flipped_list
+        }),
       })
         .then((response) => {
           // console.log(response);
@@ -163,7 +201,7 @@ class Test extends React.Component {
   }
 
   render() {
-    const {stimuli_num, name, finished, finished_uploading, classify, type, show_gray_img} = this.state;
+    const {stimuli_num, name, finished, finished_uploading, classify, type, show_gray_img, flipped} = this.state;
     const {max_stimuli_num} = this.props
 
     return <div>
@@ -224,17 +262,17 @@ class Test extends React.Component {
         <div class="container-col screen-center black-background">
           <div class="item-col container-row screen-center">
             <img class="item-row"
-                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/1.jpg`}
+                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 2 : 1}.jpg`}
                  alt="no image"/>
 
             <img class="item-row"
-                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/2.jpg`}
+                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 1 : 2}.jpg`}
                  alt="no image"/>
           </div>
         </div>
       }
 
-    {!finished && stimuli_num >= 0 && show_gray_img &&
+      {!finished && stimuli_num >= 0 && show_gray_img &&
         <div class="container-col screen-center black-background">
           <div class="item-col container-row screen-center">
             <img class="item-row"
@@ -260,7 +298,7 @@ class Test extends React.Component {
       {finished && finished_uploading &&
         <div class="container-row">
           <div class="container-col">
-            <p>上传成功！(Upload successful)</p>
+            <p>上传成功！(Upload successfully)</p>
             <Button onClick={() => {
               window.location.replace('/')
             }

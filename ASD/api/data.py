@@ -16,26 +16,28 @@ def data():
     for i, item in enumerate(y_list):
         y_list[i] = str(y_list[i])
     name = json["name"]
+    flipped_list = json['flipped_list']
+    for i, item in enumerate(flipped_list):
+        flipped_list[i] = str(item)
     t = json["type"]
     classify = json["classify"]
     x_to_sql = " ".join(x_list)
     y_to_sql = " ".join(y_list)
-
+    flipped = " ".join(flipped_list)
     connection = ASD.model.get_db()
     cur = connection.execute("SELECT COUNT(*) FROM data WHERE owner = ?", (name,))
     if cur.fetchone()["COUNT(*)"] == 0:
         connection.execute(
-            "INSERT INTO data(owner, class, xdata, ydata, type) VALUES (?,?,?,?,?)",
-            (name, classify, x_to_sql, y_to_sql, t),
+            "INSERT INTO data(owner, class, xdata, ydata, type, flipped) VALUES (?,?,?,?,?,?)",
+            (name, classify, x_to_sql, y_to_sql, t, flipped),
         )
     else:
         connection.execute(
-            "UPDATE data SET class = ?, xdata = ?, ydata = ?, type = ? WHERE owner = ?",
-            (classify, x_to_sql, y_to_sql, t, name),
+            "UPDATE data SET class = ?, xdata = ?, ydata = ?, type = ?, flipped = ? WHERE owner = ?",
+            (classify, x_to_sql, y_to_sql, t, name, flipped),
         )
 
     return flask.jsonify({"message": "OK", "status_code": 200}), 200
-
 
 # @ASD.app.route('/api/v1/c/')
 # def classification():
