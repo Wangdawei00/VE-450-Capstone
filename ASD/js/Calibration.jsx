@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import EasySeeSo from "seeso/easy-seeso";
 import Test from "./test";
+import PropTypes from "prop-types";
 
 const max_classify = 2
 
