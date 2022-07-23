@@ -8,7 +8,7 @@ if [ ! -f "var/asd.sqlite3" ]; then
   ./bin/asddb create
 fi
 
-npx javascript-obfuscator ASD/static/js/main.bundle.js --reserved-strings '\s*'
-mv ASD/static/js/main-obfuscated.bundle.js ASD/static/js/main.bundle.js
-pkill -f gunicorn
+#npx javascript-obfuscator ASD/static/js/main.bundle.js --reserved-strings '\s*'
+#mv ASD/static/js/main-obfuscated.bundle.js ASD/static/js/main.bundle.js
+pkill -f gunicorn || true
 gunicorn -b localhost:8000 -w 2 ASD:app --log-level debug
