@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Test from "./test";
 import Button from 'react-bootstrap/Button'
 import EasySeeSo from "seeso/easy-seeso";
+import Test from "./test";
 
 const max_classify = 2
 
@@ -46,6 +45,11 @@ class Calibration extends React.Component {
           <Button onClick={this.Calibrate}>
             开始校准 (Start Calibration)
           </Button>
+        </div>
+        <div class="item-row">
+          <Button onClick={() => {
+            window.location.replace('/manual/')
+          }}> 帮助(Help Manual)</Button>
         </div>
       </div>
     } else {
