@@ -67,7 +67,6 @@ def test_suite_2():
     else:
         print("fail test suite 2")
 
-
 def main():
     test_construct_img_arr_1()
     test_construct_arr_1()
@@ -76,7 +75,6 @@ def main():
     test_final_classify_2()
     test_suite_1()
     test_suite_2()
-
 
 if __name__ == "__main__":
     main()

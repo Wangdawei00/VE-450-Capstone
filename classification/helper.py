@@ -44,7 +44,6 @@ def final_classify(arr):
 
     return result
 
-
 # xdata is an array of all x position
 # img_arr is a [0,1] array, 0 means obj image is on the left and 1 means obj on the right
 # return a [0,1] array 
@@ -67,7 +66,6 @@ def construct_arr(img_arr, xdata):
 
     return arr
 
-
 # extend initial array
 def construct_img_arr(ten_arr):
     idx = 0
@@ -78,7 +76,7 @@ def construct_img_arr(ten_arr):
             idx += 1
     return img_arr
 
-
+# return int, -1 if can't identify, 0 if healthy, 1 if ASD
 # diagnosis for a child with a chosen threshold
 # left and right are different for different devices
 def test_one_user(ten_arr, xdata):
