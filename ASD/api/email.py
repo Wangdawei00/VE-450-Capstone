@@ -2,7 +2,7 @@ import flask
 import ASD
 import math
 import random
-from flask_mail import Message
+# from flask_mail import Message
 # import boto3
 # from botocore.exceptions import ClientError
 

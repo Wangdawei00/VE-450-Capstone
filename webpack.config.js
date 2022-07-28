@@ -4,7 +4,8 @@ module.exports = {
   mode: 'development',
   entry: {
     main: ["regenerator-runtime/runtime.js", "./ASD/js/main.jsx"],
-    account: "./ASD/js/account.jsx"
+    // account: "./ASD/js/account.jsx",
+    result: "./ASD/js/result.jsx"
   },
   output: {
     path: path.join(__dirname, '/ASD/static/js/'),
