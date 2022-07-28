@@ -8,17 +8,17 @@ import numpy as np
 
 # demo usage
 def main():
-    # filepath = '../wangdawei.txt'
-    # filepath = '../huiyu.txt'
-    # filepath = '../huiyu2.txt'
-    # filepath = '../wangtutu.txt'
-    # filepath = '../hongfu.txt'
-    # filepath = '../yewuqingfeng.txt'
-    # filepath = '../huanghuiyuan.txt'
-    # filepath = '../qianhaocheng.txt'
-    # filepath = '../wanglinlin.txt'
-    # filepath = '../wupengfei.txt'
-    filepath = '../zhangsan.txt'
+    # filepath = 'data/wangdawei.txt'
+    # filepath = 'data/huiyu.txt'
+    # filepath = 'data/huiyu2.txt'
+    # filepath = 'data/wangtutu.txt'
+    # filepath = 'data/hongfu.txt'
+    # filepath = 'data/yewuqingfeng.txt'
+    # filepath = 'data/huanghuiyuan.txt'
+    # filepath = 'data/qianhaocheng.txt'
+    # filepath = 'data/wanglinlin.txt'
+    # filepath = 'data/wupengfei.txt'
+    filepath = 'data/zhangsan.txt'
     
     ten_arr, xdata = split_data(filepath)
     prediction = test_one_user(ten_arr, xdata)

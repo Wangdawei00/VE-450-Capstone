@@ -14,6 +14,10 @@ filepath = '../huiyu2.txt'
 Declare to be healthy.
 Invalid data: all eye tracking out of range.
 
+filepath = '../huanghuiyuan.txt'
+Declare to have ASD.
+Invalid data: all eye tracking out of range.
+
 filepath = '../hongfu.txt'
 Declare to have ASD.
 Percent of obj eye-fixation time: 0.5950782997762863
@@ -23,10 +27,6 @@ filepath = '../yewuqingfeng.txt'
 Declare to have ASD.
 Percent of obj eye-fixation time: 0.5793991416309013
 The user may have ASD.
-
-filepath = '../huanghuiyuan.txt'
-Declare to have ASD.
-Invalid data: all eye tracking out of range.
 
 filepath = '../qianhaocheng.txt'
 Declare to have ASD.
