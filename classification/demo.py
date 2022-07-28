@@ -11,8 +11,14 @@ def main():
     # filepath = '../huiyu.txt'
     # filepath = '../huiyu2.txt'
     # filepath = '../wangtutu.txt'
-    filepath = '../hongfu.txt'
+    # filepath = '../hongfu.txt'
     # filepath = '../yewuqingfeng.txt'
+    # filepath = '../huanghuiyuan.txt'
+    # filepath = '../qianhaocheng.txt'
+    # filepath = '../wanglinlin.txt'
+    # filepath = '../wupengfei.txt'
+    filepath = '../zhangsan.txt'
+    
     ten_arr, xdata = split_data(filepath)
     prediction = test_one_user(ten_arr, xdata)
     if (prediction == 0):
