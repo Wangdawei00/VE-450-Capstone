@@ -5,10 +5,13 @@ from helper import test_one_user
 from readdata import split_data
 import numpy as np
 
+
 # demo usage
 def main():
     filepath = '../a.txt'
-    ten_arr, xdata = split_data(filepath)
+    with open(filepath) as f:
+        content = f.read()
+    ten_arr, xdata = split_data(content)
     prediction = test_one_user(ten_arr, xdata)
     if (prediction == 0):
         print("The user is not likely to have ASD.")
@@ -16,6 +19,7 @@ def main():
         print("The user may have ASD.")
     else:
         print("Can't identify.")
+
 
 if __name__ == "__main__":
     main()

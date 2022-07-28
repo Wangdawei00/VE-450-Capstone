@@ -76,6 +76,7 @@ def construct_img_arr(ten_arr):
             idx += 1
     return img_arr
 
+
 # return int, -1 if can't identify, 0 if healthy, 1 if ASD
 # diagnosis for a child with a chosen threshold
 # left and right are different for different devices

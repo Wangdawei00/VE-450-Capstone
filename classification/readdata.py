@@ -3,6 +3,7 @@
 # import libraries
 import numpy as np
 
+
 # helper function used to test the number of lines in a.txt
 def test_num_lines(filepath):
     lines = []
@@ -16,15 +17,11 @@ def test_num_lines(filepath):
     print(count)
     f.close()
 
-# function to read data from txt
-def split_data(filepath):
-    # owner, class, xdata, ydata, type, flipped
-    contents_split = []
-    with open(filepath) as f:
-        contents = f.read()
-        contents_split = contents.split("|")
-    f.close()
 
+# function to read data from txt
+def split_data(data: str):
+    # owner, class, xdata, ydata, type, flipped
+    contents_split = data.split("|")
     # get data
     d_owner = contents_split[0]
     d_class = contents_split[1]
@@ -44,9 +41,13 @@ def split_data(filepath):
     # print(xdata)
     return ten_arr, xdata
 
+
 def main():
     filepath = '../a.txt'
-    ten_arr, xdata = split_data(filepath)
+    with open(filepath) as f:
+        contents = f.read()
+    ten_arr, xdata = split_data(contents)
+
 
 if __name__ == "__main__":
     main()
