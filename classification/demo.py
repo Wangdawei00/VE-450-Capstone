@@ -9,7 +9,7 @@ import numpy as np
 # demo usage
 def main():
     # filepath = 'data/wangdawei.txt'
-    # filepath = 'data/huiyu.txt'
+    filepath = 'data/huiyu.txt'
     # filepath = 'data/huiyu2.txt'
     # filepath = 'data/wangtutu.txt'
     # filepath = 'data/hongfu.txt'
@@ -18,7 +18,7 @@ def main():
     # filepath = 'data/qianhaocheng.txt'
     # filepath = 'data/wanglinlin.txt'
     # filepath = 'data/wupengfei.txt'
-    filepath = 'data/zhangsan.txt'
+    # filepath = 'data/zhangsan.txt'
     
     ten_arr, xdata = split_data(filepath)
     prediction = test_one_user(ten_arr, xdata)

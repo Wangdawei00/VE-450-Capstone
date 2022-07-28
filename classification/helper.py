@@ -35,7 +35,8 @@ def final_classify(arr):
 
     if (num_obj + num_soc == 0):
         print("Invalid data: all eye tracking out of range.")
-        sys.exit(1)
+        result = -1
+        # sys.exit(1)
 
     else:
         percent = np.float(num_obj) / np.float(num_obj + num_soc)
@@ -76,12 +77,15 @@ def construct_arr(img_arr, xdata):
 
 # extend initial array
 def construct_img_arr(ten_arr):
-    idx = 0
-    img_arr = np.zeros(total_points)
-    for i in range(num_img):
-        for j in range(per_img_points):
-            img_arr[idx] = ten_arr[i]
-            idx += 1
+    try:
+        idx = 0
+        img_arr = np.zeros(total_points)
+        for i in range(num_img):
+            for j in range(per_img_points):
+                img_arr[idx] = ten_arr[i]
+                idx += 1
+    except:
+        return ten_arr
     return img_arr
 
 

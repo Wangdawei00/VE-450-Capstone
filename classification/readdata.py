@@ -36,7 +36,10 @@ def split_data(data: str):
         d_flipped = [int(i) for i in d_flipped]
     except:
         print("Invalid data: wrong input file structure.")
-        sys.exit(1)
+        ten_arr = np.array([])
+        xdata = np.array([])
+        return ten_arr, xdata
+        # sys.exit(1)
     # print(len(d_xdata))
     # print(len(d_flipped))
 
