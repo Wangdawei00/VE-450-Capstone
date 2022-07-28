@@ -31,16 +31,21 @@ right = 1.0
 def final_classify(arr):
     num_obj = np.count_nonzero(arr == 1)
     num_soc = np.count_nonzero(arr == 0)
-    percent = np.float(num_obj) / np.float(num_obj + num_soc)
 
-    # Behaviors not discussed in paper: percent > 0.55
-    result = -1
-    # ASD pay no different attention to both images
-    if lower_bd <= percent and percent <= higher_bd:
-        result = 1
-    # Healthy kids like to look at social images
-    if percent < lower_bd:
-        result = 0
+    if (num_obj + num_soc == 0):
+        result = -1
+
+    else:
+        percent = np.float(num_obj) / np.float(num_obj + num_soc)
+
+        # Behaviors not discussed in paper: percent > 0.55
+        result = -1
+        # ASD pay no different attention to both images
+        if lower_bd <= percent and percent <= higher_bd:
+            result = 1
+        # Healthy kids like to look at social images
+        if percent < lower_bd:
+            result = 0
 
     return result
 
