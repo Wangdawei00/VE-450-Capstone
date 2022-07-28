@@ -38,10 +38,17 @@ def split_data(filepath):
         d_ydata = [float(i) for i in d_ydata]
         d_flipped = [int(i) for i in d_flipped]
     except:
-        print("invalid data")
+        print("Invalid data: wrong input file structure.")
         sys.exit(1)
     # print(len(d_xdata))
     # print(len(d_flipped))
+
+    if (int(d_type) == 0):
+        print("Declare to be healthy.")
+    elif (int(d_type) == 1):
+        print("Declare to be have ASD.")
+    else:
+        print("Unknown patients.")
 
     ten_arr = np.array(d_flipped)
     xdata = np.array(d_xdata)

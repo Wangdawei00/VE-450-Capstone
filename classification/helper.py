@@ -2,11 +2,12 @@
 
 # import libraries
 import numpy as np
+import sys
 
 # constants
 # threshold
 lower_bd = 0.45
-higher_bd = 0.55
+higher_bd = 0.6
 
 # data dimension
 total_points = 500
@@ -33,10 +34,12 @@ def final_classify(arr):
     num_soc = np.count_nonzero(arr == 0)
 
     if (num_obj + num_soc == 0):
-        result = -1
+        print("Invalid data: all eye tracking out of range.")
+        sys.exit(1)
 
     else:
         percent = np.float(num_obj) / np.float(num_obj + num_soc)
+        print("Percent of obj eye-fixation time:", percent)
 
         # Behaviors not discussed in paper: percent > 0.55
         result = -1
