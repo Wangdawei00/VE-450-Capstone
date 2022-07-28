@@ -3,6 +3,9 @@ Unknown patients.
 Percent of obj eye-fixation time: 0.2
 The user is not likely to have ASD.
 
+filepath = '../wangtutu.txt'
+Invalid data: wrong input file structure.
+
 filepath = '../huiyu.txt'
 Declare to be healthy.
 Invalid data: all eye tracking out of range.
@@ -11,16 +14,36 @@ filepath = '../huiyu2.txt'
 Declare to be healthy.
 Invalid data: all eye tracking out of range.
 
-filepath = '../wangtutu.txt'
-Invalid data: wrong input file structure.
-
 filepath = '../hongfu.txt'
-Declare to be have ASD.
+Declare to have ASD.
 Percent of obj eye-fixation time: 0.5950782997762863
 The user may have ASD.
 
 filepath = '../yewuqingfeng.txt'
-Declare to be have ASD.
+Declare to have ASD.
 Percent of obj eye-fixation time: 0.5793991416309013
 The user may have ASD.
 
+filepath = '../huanghuiyuan.txt'
+Declare to have ASD.
+Invalid data: all eye tracking out of range.
+
+filepath = '../qianhaocheng.txt'
+Declare to have ASD.
+Percent of obj eye-fixation time: 0.4008438818565401
+The user may have ASD.
+
+filepath = '../wanglinlin.txt'
+Declare to have ASD.
+Percent of obj eye-fixation time: 0.5368421052631579
+The user may have ASD.
+
+filepath = '../wupengfei.txt'
+Declare to have ASD.
+Percent of obj eye-fixation time: 0.7192982456140351
+The user may have ASD.
+
+filepath = '../zhangsan.txt'
+Declare to have ASD.
+Percent of obj eye-fixation time: 0.798
+The user may have ASD.
