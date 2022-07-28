@@ -2,6 +2,7 @@
 
 # import libraries
 import numpy as np
+import sys
 
 # helper function used to test the number of lines in a.txt
 def test_num_lines(filepath):
@@ -26,15 +27,19 @@ def split_data(filepath):
     f.close()
 
     # get data
-    d_owner = contents_split[0]
-    d_class = contents_split[1]
-    d_xdata = contents_split[2].split(" ")
-    d_ydata = contents_split[3].split(" ")
-    d_type = contents_split[4]
-    d_flipped = contents_split[5].split(" ")
-    d_xdata = [float(i) for i in d_xdata]
-    d_ydata = [float(i) for i in d_ydata]
-    d_flipped = [int(i) for i in d_flipped]
+    try:
+        d_owner = contents_split[0]
+        d_class = contents_split[1]
+        d_xdata = contents_split[2].split(" ")
+        d_ydata = contents_split[3].split(" ")
+        d_type = contents_split[4]
+        d_flipped = contents_split[5].split(" ")
+        d_xdata = [float(i) for i in d_xdata]
+        d_ydata = [float(i) for i in d_ydata]
+        d_flipped = [int(i) for i in d_flipped]
+    except:
+        print("invalid data")
+        sys.exit(1)
     # print(len(d_xdata))
     # print(len(d_flipped))
 

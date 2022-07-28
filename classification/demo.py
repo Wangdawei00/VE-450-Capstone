@@ -8,7 +8,8 @@ import numpy as np
 # demo usage
 def main():
     # filepath = '../a.txt'
-    filepath = '../huiyu2.txt'
+    # filepath = '../huiyu.txt'
+    filepath = '../wangtutu.txt'
     ten_arr, xdata = split_data(filepath)
     prediction = test_one_user(ten_arr, xdata)
     if (prediction == 0):
