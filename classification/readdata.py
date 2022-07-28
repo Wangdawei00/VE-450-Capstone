@@ -46,7 +46,7 @@ def split_data(filepath):
     if (int(d_type) == 0):
         print("Declare to be healthy.")
     elif (int(d_type) == 1):
-        print("Declare to be have ASD.")
+        print("Declare to have ASD.")
     else:
         print("Unknown patients.")
 

@@ -6,8 +6,8 @@ import sys
 
 # constants
 # threshold
-lower_bd = 0.45
-higher_bd = 0.6
+lower_bd = 0.4
+higher_bd = 0.8
 
 # data dimension
 total_points = 500
