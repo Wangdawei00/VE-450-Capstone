@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ASD Website</title>
+    <title>{{ title }}</title>
     <link href="{{ url_for('static', filename='css/http_gitcdn.github.io_bootstrap-toggle_2.2.2_css_bootstrap-toggle.css') }}"
           rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -14,6 +14,6 @@
 </head>
 <body>
 <div id="root">Loading...</div>
-<script type="module" src="{{ url_for("static", filename="js/main.bundle.js") }}"></script>
+<script type="module" src="{{ url_for("static", filename="js/"+name+".bundle.js") }}"></script>
 </body>
 </html>

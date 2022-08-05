@@ -26,8 +26,7 @@ class Test extends React.Component {
       y: NaN,
       x_list: [],
       y_list: [],
-      stimuli_num: -1,
-      // cameraTop: true,
+      stimuli_num: -1, // cameraTop: true,
       times_to_call_saveData: 0,
       finished: false,
       finished_uploading: false,
@@ -101,11 +100,7 @@ class Test extends React.Component {
       const temp = getRandomInt(2);
       flipped_list.push(temp);
       this.setState({
-        flipped: temp,
-        flipped_list: flipped_list,
-        stimuli_num: stimuli_num + 1,
-        show_gray_img: true,
-        gray_count: 0,
+        flipped: temp, flipped_list: flipped_list, stimuli_num: stimuli_num + 1, show_gray_img: true, gray_count: 0,
       })
       // console.log(`stimuli_num: ${stimuli_num + 1}`)
     }
@@ -116,8 +111,7 @@ class Test extends React.Component {
     }
     if (gray_count === 5) {
       this.setState({
-        gray_count: 0,
-        show_gray_img: false,
+        gray_count: 0, show_gray_img: false,
       })
     }
     if (!show_gray_img) {
@@ -148,18 +142,10 @@ class Test extends React.Component {
       // send data to backend
       console.log(x_list)
       fetch("/api/v1/d/", {
-        credentials: "same-origin",
-        method: "POST",
-        headers: {
+        credentials: "same-origin", method: "POST", headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          x_data: x_list,
-          y_data: y_list,
-          name: name,
-          classify: classify,
-          type: type,
-          flipped_list: flipped_list
+        }, body: JSON.stringify({
+          x_data: x_list, y_data: y_list, name: name, classify: classify, type: type, flipped_list: flipped_list
         }),
       })
         .then((response) => {
@@ -205,107 +191,106 @@ class Test extends React.Component {
     const {max_stimuli_num} = this.props
 
     return <div>
-      {stimuli_num === -1 &&
-        <div class="container-row">
-          <div class="container-col">
-            <div class="item-col">
-              {!document.fullscreenElement && stimuli_num === -1 &&
-                < Button onClick={this.fullScreen}>进入全屏（推荐）(Fullscreen recommended)</Button>}
+      {stimuli_num === -1 && <div class="container-row">
+        <div class="container-col">
+          <div class="item-col">
+            {!document.fullscreenElement && stimuli_num === -1 &&
+              < Button onClick={this.fullScreen}>进入全屏（推荐）(Fullscreen recommended)</Button>}
+          </div>
+
+          {stimuli_num === -1 && <div>
+            <Form>
+              <Form.Group>
+                <div class="item-col">
+                  <h2>请输入孩子的姓名：(Please input the child's name)</h2>
+                </div>
+
+                <div class="item-col">
+                  <Form.Control type="text" value={name} onChange={this.onChange}/>
+                </div>
+              </Form.Group>
+            </Form>
+
+            <div class="item-col container-row">
+              <Dropdown class="item-col">
+                <Dropdown.Toggle variant="success">
+                  {type === -1 && "请选择 (Select)"}
+                  {type === 0 && "确认不患有ASD (ASD Negative)"}
+                  {type === 1 && "确认患有ASD (ASD Positive)"}
+                  {type === 2 && "未知 (Unknown)"}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onSelect={() => this.setState({type: 0})}>
+                    确认不患有ASD (ASD Negative)
+                  </Dropdown.Item>
+                  <Dropdown.Item onSelect={() => this.setState({type: 1})}>
+                    确认患有ASD (ASD Positive)
+                  </Dropdown.Item>
+                  <Dropdown.Item onSelect={() => this.setState({type: 2})}>
+                    未知 (Unknown)
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
 
-            {stimuli_num === -1 &&
-              <div>
-                <Form>
-                  <Form.Group>
-                    <div class="item-col">
-                      <h2>请输入孩子的姓名：(Please input the child's name)</h2>
-                    </div>
-
-                    <div class="item-col">
-                      <Form.Control type="text" value={name} onChange={this.onChange}/>
-                    </div>
-                  </Form.Group>
-                </Form>
-
-                <div class="item-col container-row">
-                  <Dropdown class="item-col">
-                    <Dropdown.Toggle variant="success">
-                      {type === -1 && "请选择 (Select)"}
-                      {type === 0 && "确认不患有ASD (ASD Negative)"}
-                      {type === 1 && "确认患有ASD (ASD Positive)"}
-                      {type === 2 && "未知 (Unknown)"}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item onSelect={() => this.setState({type: 0})}>
-                        确认不患有ASD (ASD Negative)
-                      </Dropdown.Item>
-                      <Dropdown.Item onSelect={() => this.setState({type: 1})}>
-                        确认患有ASD (ASD Positive)
-                      </Dropdown.Item>
-                      <Dropdown.Item onSelect={() => this.setState({type: 2})}>
-                        未知 (Unknown)
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-
-                <div class="item-col container-row">
-                  <Button class="item-row" onClick={this.startTesting}>开始测试 (Start Testing)</Button>
-                </div>
-              </div>
-            }
-          </div>
+            <div class="item-col container-row">
+              <Button class="item-row" onClick={this.startTesting}>开始测试 (Start Testing)</Button>
+            </div>
+          </div>}
         </div>
-      }
+      </div>}
 
-      {!finished && stimuli_num >= 0 && !show_gray_img &&
-        <div class="container-col screen-center black-background">
-          <div class="item-col container-row screen-center">
-            <img class="item-row"
-                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 2 : 1}.jpg`}
-                 alt="no image"/>
+      {!finished && stimuli_num >= 0 && !show_gray_img && <div class="container-col screen-center black-background">
+        <div class="item-col container-row screen-center">
+          <img class="item-row"
+               src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 2 : 1}.jpg`}
+               alt="no image"/>
 
-            <img class="item-row"
-                 src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 1 : 2}.jpg`}
-                 alt="no image"/>
-          </div>
+          <img class="item-row"
+               src={`/static/images/grouping/group_${stimuli_num + classify * max_stimuli_num}/${flipped ? 1 : 2}.jpg`}
+               alt="no image"/>
         </div>
-      }
+      </div>}
 
-      {!finished && stimuli_num >= 0 && show_gray_img &&
-        <div class="container-col screen-center black-background">
-          <div class="item-col container-row screen-center">
-            <img class="item-row"
-                 src={`/static/images/gray.png`}
-                 alt="no image"/>
+      {!finished && stimuli_num >= 0 && show_gray_img && <div class="container-col screen-center black-background">
+        <div class="item-col container-row screen-center">
+          <img class="item-row"
+               src={`/static/images/gray.png`}
+               alt="no image"/>
 
-            <img class="item-row"
-                 src={`/static/images/gray.png`}
-                 alt="no image"/>
-          </div>
+          <img class="item-row"
+               src={`/static/images/gray.png`}
+               alt="no image"/>
         </div>
-      }
+      </div>}
 
 
-      {finished && !finished_uploading &&
-        <div class="container-row">
-          <div class="item-row">
-            完成测试，等待上传数据。。。(Test finished. Waiting to upload data)
-          </div>
+      {finished && !finished_uploading && <div class="container-row">
+        <div class="item-row">
+          完成测试，等待上传数据。。。(Test finished. Waiting to upload data)
         </div>
-      }
+      </div>}
 
-      {finished && finished_uploading &&
-        <div class="container-row">
-          <div class="container-col">
+      {finished && finished_uploading && <div>
+        <div className="container-row">
+          <div className="container-col">
             <p>上传成功！(Upload successfully)</p>
             <Button onClick={() => {
               window.location.replace('/')
-            }
-            }>继续测试 (Continue testing)
+            }}>继续测试 (Continue testing)
             </Button>
           </div>
         </div>
+        <div className="container-row">
+          <div className="container-col">
+            <Button onClick={() => {
+              window.location.replace('/result/')
+            }
+            }>检查结果(Check the result)</Button>
+          </div>
+        </div>
+      </div>
+
       }
 
     </div>
@@ -314,8 +299,7 @@ class Test extends React.Component {
 
 Test.propTypes = {
   license: PropTypes.string.isRequired,
-  calibration_data: PropTypes.string.isRequired,
-  // data_num: PropTypes.number.isRequired,
+  calibration_data: PropTypes.string.isRequired, // data_num: PropTypes.number.isRequired,
   millisecond_per_stimuli: PropTypes.number.isRequired,
   millisecond_per_sample: PropTypes.number.isRequired,
   max_classify: PropTypes.number.isRequired,
